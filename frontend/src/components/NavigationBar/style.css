@@ -1,0 +1,80 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.bg-custom-purple {
+  background-color: #6606a5;
+  /* border-radius: 0 0 8px 8px; Заоблени ъгли */
+  box-shadow: 6px 29px 11px -11px rgba(0, 0, 0, 0.4);
+  border: none;
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .nav-dropdown {
+  color: white; /* Цвят на текста */
+}
+
+.navbar-custom .nav-link.disabled {
+  color: #cccccc; /* Цветът на текста за disabled линкове */
+}
+.search-icon {
+  color: white;
+  border: none;
+  font-weight: 300;
+}
+.dropdown-hover:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0; 
+}
+.dropdown-hover .dropdown-toggle::after {
+  display: none; /* Скрива стандартната стрелка */
+}
+.dropdown-hover:hover .dropdown-menu {
+  display: block;
+  margin-top: 0; /* Можете да промените стойността според нуждите ви */
+}
+
+/* Стилове за подчертаване и задържане на цвета бял */
+.navbar-nav .nav-link,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #fff;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  border-bottom: 1px solid #d7d3d3; 
+}
+
+.dropdown-hover .dropdown-menu {
+  background-color: rgba(211, 211, 211, 0.5); /* Светлосив цвят с 90% непрозрачност */
+  border-radius: 0.375rem; /* Стил за заобляне на ъглите */
+}
+
+/* Стилове за заглавия и вертикален разделител */
+.dropdown-header {
+  font-size: 1.25em;
+  color: #000; /* Цветът на текста за заглавията */
+  padding: 0.5rem 1rem;
+}
+
+/* Вертикален разделител за десктоп */
+.vertical-divider {
+  border-left: 2px solid #000; /* Цветът на разделителя */
+  height: auto;
+  display: inline-block;
+  margin: 0 1rem;
+  vertical-align: middle;
+}
+
+/* Вертикален разделител за мобилни устройства */
+@media (max-width: 768px) {
+  .vertical-divider {
+    border-left: none;
+    border-top: 2px solid #000;
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
