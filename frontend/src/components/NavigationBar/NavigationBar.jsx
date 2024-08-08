@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -13,23 +12,43 @@ function NavigationBar() {
       <Container fluid className="montserrat">
         <Navbar.Brand href="/">
           <img
-            src={`${process.env.PUBLIC_URL}/logo.png`}
+            src={process.env.PUBLIC_URL + "/logo.png"}
             alt="Maystore Logo"
-            className="img-fluid d-inline-block align-top logo"
+            className="img-fluid d-inline-block align-top logo "
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Form className="d-flex me-4 ">
+          <Form.Control
+            type="search"
+            placeholder="Търсене"
+            aria-label="Search"
+            className="rounded-start-pill"
+          />
+          <Button
+            variant="outline-light"
+            className="search-icon ms-0 rounded-end-pill"
+          >
+            <i class="bi bi-search"></i>
+          </Button>
+        </Form>
+
+        <Navbar.Toggle
+          aria-controls="navbarScroll row"
+          className="border border-white border border-3"
+        />
+
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
             <NavDropdown
               title="Бизнес клиенти"
               id="navbarScrollingDropdown"
-              className="dropdown-hover custom-dropdown montserrat"
+              className="dropdown-hover custom-dropdown montserrat "
             >
+              
               <div className="dropdown-column">
-                <NavDropdown.Header href="/Принтове">
+                <NavDropdown.Item href="/Принтове" className="header-css">
                   Принтове
-                </NavDropdown.Header>
+                </NavDropdown.Item>
                 <NavDropdown.Item href="#action3">
                   "Тениска на Месеца"
                 </NavDropdown.Item>
@@ -38,7 +57,7 @@ function NavigationBar() {
                 </NavDropdown.Item>
               </div>
               <div className="dropdown-column">
-                <NavDropdown.Header>T-shirts</NavDropdown.Header>
+              <NavDropdown.Item href="/Принтове" className="header-css">Тениски</NavDropdown.Item>
                 <NavDropdown.Item href="#action5">
                   Тениски без Принтове
                 </NavDropdown.Item>
@@ -53,11 +72,13 @@ function NavigationBar() {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action9">Промоции</NavDropdown.Item>
               </div>
-              <div className="dropdown-column">
-                <NavDropdown.Header>Accessories</NavDropdown.Header>
+
+              <div className="dropdown-column col">
+                 <NavDropdown.Item href="/Принтове" className="header-css">Аксесоари</NavDropdown.Item>
                 <NavDropdown.Item href="#action10">Шапки</NavDropdown.Item>
                 <NavDropdown.Item href="#action11">Чанти</NavDropdown.Item>
               </div>
+              
             </NavDropdown>
 
             <NavDropdown
@@ -97,26 +118,12 @@ function NavigationBar() {
               </div>
             </NavDropdown>
           </Nav>
-
-          <Form className="d-flex me-4 ">
-            <Form.Control
-              type="search"
-              placeholder="Търсене"
-              aria-label="Search"
-              className="rounded-start-pill"
-            />
-            <Button
-              variant="outline-light"
-              className="search-icon ms-0 rounded-end-pill"
-            >
-              <i class="bi bi-search"></i>
-            </Button>
-          </Form>
-          <i
-            className="bi bi-basket-fill"
-            style={{ fontSize: "1.5rem", color: "white" }}
-          ></i>
         </Navbar.Collapse>
+
+        <i
+          className="bi bi-basket-fill"
+          style={{ fontSize: "1.5rem", color: "white" }}
+        ></i>
       </Container>
     </Navbar>
   );

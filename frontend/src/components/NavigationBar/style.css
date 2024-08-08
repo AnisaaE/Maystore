@@ -67,6 +67,14 @@ body {
   margin: 0 1rem;
   vertical-align: middle;
 }
+.logo {
+  width: 100px; /* Или какъвто размер желаете */
+  height: auto;
+}
+
+.header-css{
+  text-decoration:line-through;
+}
 
 /* Вертикален разделител за мобилни устройства */
 @media (max-width: 768px) {
