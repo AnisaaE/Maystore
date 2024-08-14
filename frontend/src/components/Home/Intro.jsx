@@ -1,23 +1,111 @@
-
+import { Link } from "react-router-dom";
 import "./style.css";
 
-export function Intro(){
-    return (
-        <section id="intro">
-            <div className="container-fluid ms-2 pe-0">
-                <div className="row justify-content-center bg-image custom-height">
-                  <div className="col-md-5 text-center text-md-start custom-height">
-                    <h1>
-                    <div className="display-2">Реклама за вашия бизнес или събитие</div>
-                    <div className="display-6">Брaндирани тениски, шапки, джъмпери, якета и други.</div>
-                    </h1>
-                  </div>
-                  <div className="col row custom-height">                
-                         <img src={require('../../assets/images/tshirt-intro.png')} alt="thirt-intro" className="responsive-image"/>
-                   </div>
-               </div>
-            </div>
+export function Intro() {
+  return (
+    <section id="intro" className="custom-height">
+      <div className="container-fluid pe-0 h-100">
+        <div className="row justify-content-center align-items-center bg-image h-100">
+          <div className="col-md-6 align-items-center text-center text-md-start ms-3">
+            <h1>
+              <div className="display-2">
+                Реклама за вашия бизнес или събитие
+              </div>
+              <div className="display-6">
+                Брандирани тениски, шапки, джъмпери, якета и други.
+              </div>
+            </h1>
+          </div>
+          <div className="col row h-100">
+            <div className="col-8 h-100 image-container">
+              <img
+                src={require("../../assets/images/tshirt-intro.png")}
+                alt="thirt-intro"
+                className="responsive-image"
+              />
+              <img
+                src={require("../../assets/images/overlay1.png")}
+                alt="overlay1"
+                className="overlay-image overlay1"
+              />
+              <img
+                src={require("../../assets/images/overlay2.png")}
+                alt="overlay2"
+                className="overlay-image overlay2"
+              />
+              <img
+                src={require("../../assets/images/overlay3.jpeg")}
+                alt="overlay3"
+                className="overlay-image overlay3"
+              />
+              <div class="overlay-text overlay4">Най-добрия кум</div>
+              <img
+                src={require("../../assets/images/overlay5.png")}
+                alt="overlay5"
+                className="overlay-image overlay5"
+              />
+              <div class="overlay-text overlay6">Рекламно студио Gazdzhalov</div>
 
-        </section>
-    )
+            </div>
+            <div className="col flexClass h-100 ">
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+              <div className="circleDiv">
+                <Link to="/path6">
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="tshirt-intro"
+                    className="rounded-circle border-white border-3"
+                  />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

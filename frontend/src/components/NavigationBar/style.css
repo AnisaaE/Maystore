@@ -48,7 +48,7 @@ body {
 }
 
 .dropdown-hover .dropdown-menu {
-  background-color: rgba(211, 211, 211, 0.5); /* Светлосив цвят с 90% непрозрачност */
+  background-color: rgba(211, 211, 211, 0.7); 
   border-radius: 0.375rem; /* Стил за заобляне на ъглите */
 }
 
