@@ -4,17 +4,19 @@ import "./style.css";
 export function Intro() {
   return (
     <section id="intro" className="custom-height">
-      <div className="container-fluid pe-0 h-100">
-        <div className="row justify-content-center align-items-center bg-image h-100">
+      <div className="container-fluid bg-image pe-0 h-100">
+        <div className="row justify-content-center align-items-center h-100">
           <div className="col-md-6 align-items-center text-center text-md-start ms-3">
-            <h1>
-              <div className="display-2">
-                Реклама за вашия бизнес или събитие
-              </div>
-              <div className="display-6">
-                Брандирани тениски, шапки, джъмпери, якета и други.
-              </div>
-            </h1>
+            <div className="wrapper">
+              <h1>
+                <div className="display-2">
+                  Реклама за вашия бизнес или събитие
+                </div>
+                <div className="display-6">
+                  Брандирани тениски, шапки, джъмпери, якета и други.
+                </div>
+              </h1>
+            </div>
           </div>
           <div className="col row h-100">
             <div className="col-8 h-100 image-container">
@@ -44,8 +46,9 @@ export function Intro() {
                 alt="overlay5"
                 className="overlay-image overlay5"
               />
-              <div class="overlay-text overlay6">Рекламно студио Gazdzhalov</div>
-
+              <div class="overlay-text overlay6">
+                Рекламно студио Gazdzhalov
+              </div>
             </div>
             <div className="col flexClass h-100 ">
               <div className="circleDiv">

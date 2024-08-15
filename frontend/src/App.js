@@ -2,6 +2,7 @@ import './App.css';
 import { Route, Routes } from "react-router-dom";
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import { Intro } from './components/Home/Intro';
+import { Footer } from './components/Footer/Footer';
 
 
 
@@ -10,6 +11,7 @@ function App() {
     <div className="App">
       <NavigationBar/>
      <Intro/>
+     <Footer/>
     </div>
   );
 }
