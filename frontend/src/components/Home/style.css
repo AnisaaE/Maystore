@@ -11,9 +11,32 @@
     height: 100vh; /* Задава височината на div-а да е 100% от височината на видимата част на екрана */
     width: 100%;
   }
-.wrapper{
+/* Основен стил за линка */
+.custom-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #6351ce;
+  text-decoration: none;
+  font-size: 1.2rem;
+  border: 2px solid #6351ce;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стил при задържане */
+.custom-link:hover {
+  background-color: #6351ce;
+  color: white;
   
 }
+.transparent-background {
+  background-color:rgba(240, 240, 240, 0.5); 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); 
+}
+
   .custom-height {
     height: 500px; /* Задайте желаната височина, например 300px */
     overflow: hidden; /* Скрива съдържание, което излиза извън зададената височина */
