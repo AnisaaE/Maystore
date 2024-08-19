@@ -1,12 +1,7 @@
-/* *, *:before, *:after{
-  margin:0;
-  padding: 0;
-} */
-
 .bg-image {
-    background-image: url('../../assets/images/background.jpg'); /* Пътят към вашата снимка */
-    background-size: 100% 100%; /* Разтяга изображението така, че да покрива цялата площ на елемента */
-    background-position: center; /* Центрира изображението */
+    background-image: url('../../assets/images/background.jpg');
+    background-size: 100% 100%; 
+    background-position: center; 
     background-repeat: no-repeat; 
     height: 100vh; 
     width: 100%;
@@ -20,12 +15,12 @@
   color: #6606a5;
   text-decoration: none;
   font-size: 1.2rem;
-  border: 2px solid#6606a5;
+  border: 2px solid#7f38ae;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
+  
 }
 
-/* Стил при задържане */
 .custom-link:hover {
   background-color: #7f38ae;
   color: white;
@@ -40,7 +35,7 @@
 
   .custom-height {
     height: 545px; 
-    overflow: hidden; /* Скрива съдържание, което излиза извън зададената височина */
+    overflow: hidden; 
     padding: 0px;
   }
 

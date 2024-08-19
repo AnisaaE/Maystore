@@ -10,9 +10,9 @@ export function Intro() {
         <div className="container-fluid bg-image pe-0 h-100">
           <div className="row justify-content-center align-items-center h-100">
             <div className="col-md-6 align-items-center transparent-background text-center text-md-start ms-3">
-              <div className="wrapper m-3">
+              <div className="m-3 text-center text-md-start">
                 <h1>
-                  <div className="display-2">
+                  <div className="display-2 pb-2 ">
                     Реклама за вашия бизнес или събитие
                   </div>
                   <div className="display-6">
@@ -24,7 +24,7 @@ export function Intro() {
                 </a>
               </div>
             </div>
-            <div className="col row h-100 mt-2">
+            <div className="col row h-100 d-none d-md-flex mt-2">
               <div className="col-12 col-lg-8 h-100 mt-2 image-container d-none d-md-flex justify-content-center">
                
                   <img
