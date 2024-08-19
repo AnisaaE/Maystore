@@ -11,22 +11,23 @@
     height: 100vh; 
     width: 100%;
   }
+
 /* Основен стил за линка */
 .custom-link {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  color: #6351ce;
+  color: #6606a5;
   text-decoration: none;
   font-size: 1.2rem;
-  border: 2px solid #6351ce;
+  border: 2px solid#6606a5;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 /* Стил при задържане */
 .custom-link:hover {
-  background-color: #6351ce;
+  background-color: #7f38ae;
   color: white;
   
 }
@@ -41,11 +42,6 @@
     height: 545px; 
     overflow: hidden; /* Скрива съдържание, което излиза извън зададената височина */
     padding: 0px;
-  }
-  .responsive-image {
-    max-width: 100%; /* Ensure the image scales properly */
-    max-height: 100%; /* Prevents the image from exceeding the container's height */
-    object-fit: contain;/* Scales the image to fit within the container without cropping */
   }
 
   .rounded-circle {
@@ -69,7 +65,6 @@
     background-color: #ccc;
     border-radius: 50%;
     margin-bottom: 10px;
-    flex-shrink: 0;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -77,7 +72,6 @@
     column-gap: 0;
 }
  .circleDiv img{
-
     max-width: 100%; 
     max-height: 100%;
     object-fit: contain;
@@ -88,24 +82,18 @@
   .circleDiv:hover img {
     transform: scale(1.1); 
 }
+  .responsive-image {
+    max-width: 100%;
+    max-height: 100%; 
+    object-fit: contain;
+  }
 
 .image-container {
   position: relative;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 .overlay-image,
 .overlay-text {
   position: absolute;
@@ -121,7 +109,7 @@
 
   .overlay-text {
     top:55%;
-    font-size: 1.5rem; /* Може да се коригира според нуждите */
+    font-size: 1.5rem; 
     color: black;
     font-weight: 400;
   }

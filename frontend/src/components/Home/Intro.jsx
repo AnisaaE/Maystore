@@ -9,8 +9,8 @@ export function Intro() {
       <section id="intro" className="custom-height">
         <div className="container-fluid bg-image pe-0 h-100">
           <div className="row justify-content-center align-items-center h-100">
-            <div className="col-md-6 align-items-center text-center text-md-start ms-3">
-              <div className="wrapper transparent-background">
+            <div className="col-md-6 align-items-center transparent-background text-center text-md-start ms-3">
+              <div className="wrapper m-3">
                 <h1>
                   <div className="display-2">
                     Реклама за вашия бизнес или събитие
@@ -25,38 +25,40 @@ export function Intro() {
               </div>
             </div>
             <div className="col row h-100 mt-2">
-              <div className="col-8 h-100 mt-2 image-container">
-                <img
-                  src={require("../../assets/images/tshirt-intro.png")}
-                  alt="thirt-intro"
-                  className="responsive-image"
-                />
-                <img
-                  src={require("../../assets/images/overlay1.png")}
-                  alt="overlay1"
-                  className="overlay-image overlay1"
-                />
-                <img
-                  src={require("../../assets/images/overlay2.png")}
-                  alt="overlay2"
-                  className="overlay-image overlay2"
-                />
-                <img
-                  src={require("../../assets/images/overlay3.jpeg")}
-                  alt="overlay3"
-                  className="overlay-image overlay3"
-                />
-                <div class="overlay-text overlay4">Най-добрия кум</div>
-                <img
-                  src={require("../../assets/images/overlay5.png")}
-                  alt="overlay5"
-                  className="overlay-image overlay5"
-                />
-                <div class="overlay-text overlay6">
-                  Рекламно студио Gazdzhalov
+              <div className="col-12 col-lg-8 h-100 mt-2 image-container d-none d-md-flex justify-content-center">
+               
+                  <img
+                    src={require("../../assets/images/tshirt-intro.png")}
+                    alt="thirt-intro"
+                    className="responsive-image"
+                  />
+                  <img
+                    src={require("../../assets/images/overlay1.png")}
+                    alt="overlay1"
+                    className="overlay-image overlay1"
+                  />
+                  <img
+                    src={require("../../assets/images/overlay2.png")}
+                    alt="overlay2"
+                    className="overlay-image overlay2"
+                  />
+                  <img
+                    src={require("../../assets/images/overlay3.jpeg")}
+                    alt="overlay3"
+                    className="overlay-image overlay3"
+                  />
+                  <div class="overlay-text overlay4">Най-добрия кум</div>
+                  <img
+                    src={require("../../assets/images/overlay5.png")}
+                    alt="overlay5"
+                    className="overlay-image overlay5"
+                  />
+                  <div class="overlay-text overlay6">
+                    Рекламно студио Gazdzhalov
+                  </div>
                 </div>
-              </div>
-              <div className="col flexClass h-100 mt-2 ">
+              
+              <div className="col flexClass h-100 mt-2 d-none d-lg-flex">
                 <div className="circleDiv">
                   <Link to="/path6">
                     <img
@@ -66,7 +68,7 @@ export function Intro() {
                     />
                   </Link>
                 </div>
-                <div className="circleDiv">
+                <div className="circleDiv ">
                   <Link to="/path6">
                     <img
                       src={require("../../assets/images/tshirt-intro.png")}
@@ -116,7 +118,7 @@ export function Intro() {
           </div>
         </div>
       </section>
-      <Category/>
+      <Category />
       <WhyChooseUs />
     </div>
   );
