@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./style.css";
 import WhyChooseUs from "./WhyUS/WhyUs";
+import Category from "./Category/Category";
 
 export function Intro() {
   return (
@@ -55,7 +56,7 @@ export function Intro() {
                   Рекламно студио Gazdzhalov
                 </div>
               </div>
-              <div className="col flexClass h-100 ">
+              <div className="col flexClass h-100 mt-2 ">
                 <div className="circleDiv">
                   <Link to="/path6">
                     <img
@@ -115,6 +116,7 @@ export function Intro() {
           </div>
         </div>
       </section>
+      <Category/>
       <WhyChooseUs />
     </div>
   );

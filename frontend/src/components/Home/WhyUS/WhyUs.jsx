@@ -1,3 +1,4 @@
+import './cards.css';
 const services = [
     {
       icon: "👕", // Може да замените с FontAwesome или друга иконка
@@ -45,7 +46,7 @@ const services = [
           <div className="row justify-content-center">
             {services.map((service, index) => (
               <div key={index} className="col-lg-4 col-md-6 mb-4">
-                <div className="card shadow-sm h-100 text-center border-0">
+                <div className="card custom-card shadow-sm h-100 text-center border-0">
                   <div className="card-body">
                     <div className="icon mb-4" style={{ fontSize: "50px" }}>
                       {service.icon}

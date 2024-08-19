@@ -1,0 +1,30 @@
+.item {
+  background-color: #f1f0fe;
+  border-radius: 25px;
+  position: relative;
+  padding: 40px;
+  margin-bottom: 96px;
+  height: 200px;
+}
+  
+.item .image {
+  position: relative;
+}
+
+.item .image img {
+  position: absolute;
+  border-radius: 25px;
+  max-width: 260px;
+  left: 0;
+   top: -70px;
+}
+
+.no-link-style {
+  color: inherit; /* Наследява цвета на родителския елемент */
+  text-decoration: none; /* Премахва подчертаването */
+}
+
+.no-link-style:hover {
+  color: inherit; 
+  text-decoration: underline;
+}
