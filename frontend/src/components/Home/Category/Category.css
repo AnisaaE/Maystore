@@ -14,17 +14,56 @@
 .item .image img {
   position: absolute;
   border-radius: 25px;
-  max-width: 260px;
+  max-width: 16rem;
   left: 0;
    top: -70px;
+   max-width: 250px; 
+      width: 100%; 
+      height: auto;
 }
 
 .no-link-style {
-  color: inherit; /* Наследява цвета на родителския елемент */
-  text-decoration: none; /* Премахва подчертаването */
+  color: inherit; 
+  text-decoration: none;
 }
 
 .no-link-style:hover {
   color: inherit; 
   text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .item {
+    padding: 20px;
+    margin-bottom: 50px;
+    height: auto; /* Променяме височината на auto за адаптивност */
+  }
+  
+  /* Вертикална подредба на съдържанието */
+  .item .image {
+    margin-bottom: 20px; /* Отделяне на изображението от текста */
+    position: relative; /* Премахваме абсолютното позициониране */
+    text-align: center; /* Центриране на изображението */
+  }
+  
+  .item .image img {
+    max-width: 150px; /* Изображението да заема цялата ширина на контейнера */
+    position: relative; /* Премахваме абсолютното позициониране */
+    top: 0;
+    left: 0;
+  }
+  
+  /* Центриране на текста под изображението */
+  .item h4, .item p {
+    text-align: center; /* Центриране на текста за по-малки екрани */
+    margin-top: 0;
+  }
+
+  /* Вертикална подредба на колоните */
+  .item .col-lg-3, .item .col-lg-9 {
+    width: 100%; /* Всяка колона да заема цялата ширина */
+    max-width: 100%;
+    flex: none; /* Премахване на flex-grow свойството */
+  }
+  
 }

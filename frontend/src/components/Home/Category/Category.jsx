@@ -42,7 +42,6 @@ const Category = () => {
               >
                 <div className="col-lg-3">
                   <div className="image">
-                    ``
                     <img
                       src={category.image}
                       alt={category.title}
@@ -54,13 +53,13 @@ const Category = () => {
                   <h4 >
                     <a
                       href="#"
-                      className="no-link-style d-flex align-items-center"
+                      className="no-link-style d-flex align-items-center ms-2"
                     >
                       {category.title}
                       <i className="bi bi-arrow-right ms-2"></i>{" "}
                     </a>
                   </h4>
-                  <p className="text-start">{category.text}</p>
+                  <p className="text-start d-none d-lg-flex ms-2">{category.text}</p>
                 </div>
               </div>
             </div>
