@@ -4,79 +4,75 @@ body {
 
 .bg-custom-purple {
   background-color: #6606a5;
-  /* border-radius: 0 0 8px 8px; Заоблени ъгли */
   box-shadow: 6px 29px 11px -11px rgba(0, 0, 0, 0.4);
   border: none;
 }
+
 .navbar-custom .navbar-brand,
 .navbar-custom .nav-link,
-.navbar-custom .nav-dropdown {
-  color: white; /* Цвят на текста */
+.navbar-custom .nav-dropdown,
+.search-icon {
+  color: white;
 }
 
 .navbar-custom .nav-link.disabled {
-  color: #cccccc; /* Цветът на текста за disabled линкове */
+  color: #cccccc;
 }
+
 .search-icon {
-  color: white;
   border: none;
   font-weight: 300;
 }
-.dropdown-hover:hover > .dropdown-menu {
-  display: block;
-  margin-top: 0; 
-}
+
 .dropdown-hover .dropdown-toggle::after {
-  display: none; /* Скрива стандартната стрелка */
-}
-.dropdown-hover:hover .dropdown-menu {
-  display: block;
-  margin-top: 0; /* Можете да промените стойността според нуждите ви */
+  display: none;
 }
 
-/* Стилове за подчертаване и задържане на цвета бял */
 .navbar-nav .nav-link,
 .navbar-nav .nav-link:focus,
 .navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  color: #fff;
+.navbar-nav .nav-link:active,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+  color: white !important; 
+  text-decoration: none !important;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-  border-bottom: 1px solid #d7d3d3; 
+  border-bottom: 1px solid #d7d3d3;
 }
 
 .dropdown-hover .dropdown-menu {
-  background-color: rgba(211, 211, 211, 0.7); 
-  border-radius: 0.375rem; /* Стил за заобляне на ъглите */
+  background-color: rgba(211, 211, 211, 0.7);
+  border-radius: 0.375rem;
 }
 
-/* Стилове за заглавия и вертикален разделител */
 .dropdown-header {
   font-size: 1.25em;
-  color: #000; /* Цветът на текста за заглавията */
+  color: #000;
   padding: 0.5rem 1rem;
+  background-color: transparent;
 }
 
-/* Вертикален разделител за десктоп */
-.vertical-divider {
-  border-left: 2px solid #000; /* Цветът на разделителя */
-  height: auto;
-  display: inline-block;
-  margin: 0 1rem;
-  vertical-align: middle;
-}
 .logo {
-  width: 100px; /* Или какъвто размер желаете */
+  width: 100px;
   height: auto;
 }
 
-.header-css{
-  text-decoration:line-through;
+.nav-item.dropdown:hover > .dropdown-menu {
+  display: flex;
+  margin-top: 0;
+  opacity: 1;
 }
 
-/* Вертикален разделител за мобилни устройства */
+.dropdown-menu {
+  display: none;
+  flex-direction: row;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
 @media (max-width: 768px) {
   .vertical-divider {
     border-left: none;
@@ -84,5 +80,11 @@ body {
     display: block;
     width: 100%;
     margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .nav-item.dropdown:hover > .dropdown-menu {
+    display: none;
   }
 }
