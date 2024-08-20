@@ -1,8 +1,9 @@
 import './App.css';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import { Intro } from './components/Home/Intro';
 import { Footer } from './components/Footer/Footer';
+import { Stickers } from './components/Stickers/Stickers';
 
 
 
@@ -10,7 +11,11 @@ function App() {
   return (
     <div className="App">
       <NavigationBar/>
-     <Intro/>
+      <Routes>
+        <Route path="/" element={<Intro/>} />
+      
+        <Route path="/stickers" element={<Stickers/>} />
+      </Routes>
      <Footer/>
     </div>
   );

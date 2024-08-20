@@ -1,16 +1,17 @@
+import { Link } from 'react-router-dom';
 import "./style.css";
 
 function NavigationBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-custom p-3 bg-custom-purple">
       <div className="container-fluid montserrat">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img
             src={process.env.PUBLIC_URL + "/logo.png"}
             alt="Maystore Logo"
             className="img-fluid d-inline-block align-top logo"
           />
-        </a>
+        </Link>
         <form className="d-flex me-4">
           <input
             className="form-control rounded-start-pill"
@@ -18,7 +19,10 @@ function NavigationBar() {
             placeholder="Търсене"
             aria-label="Search"
           />
-          <button className="btn search-icon ms-0 rounded-end-pill border border-white" type="submit">
+          <button
+            className="btn search-icon ms-0 rounded-end-pill border border-white"
+            type="submit"
+          >
             <i className="bi bi-search search-icon"></i>
           </button>
         </form>
@@ -36,128 +40,145 @@ function NavigationBar() {
         <div className="collapse navbar-collapse" id="navbarScroll">
           <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-link dropdown-toggle dropdown-hover custom-dropdown montserrat"
-                href="#"
+                to="#"
                 id="navbarScrollingDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Бизнес клиенти
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              
-              <div className="dropdown-column">
+              </Link>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="navbarScrollingDropdown"
+              >
+                <div className="dropdown-column">
                   <li>
-                    <a className="dropdown-item dropdown-header" href="/Принтове">
+                    <Link
+                      className="dropdown-item dropdown-header"
+                      to="/Принтове"
+                    >
                       Принтове
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action3">
+                    <Link className="dropdown-item" to="#action3">
                       "Тениска на Месеца"
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action4">
+                    <Link className="dropdown-item" to="#action4">
                       "Избери Любовта"
-                    </a>
+                    </Link>
                   </li>
                 </div>
                 <div className="dropdown-column">
                   <li>
-                    <a className="dropdown-item dropdown-header" href="/Принтове">
+                    <Link
+                      className="dropdown-item dropdown-header"
+                      to="/Принтове"
+                    >
                       Принтове
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action3">
+                    <Link className="dropdown-item" to="#action3">
                       "Тениска на Месеца"
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action4">
+                    <Link className="dropdown-item" to="#action4">
                       "Избери Любовта"
-                    </a>
+                    </Link>
                   </li>
                 </div>
                 <div className="dropdown-column">
                   <li>
-                    <a className="dropdown-item dropdown-header" href="/Принтове">
+                    <Link
+                      className="dropdown-item dropdown-header"
+                      to="/Принтове"
+                    >
                       Тениски
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action5">
+                    <Link className="dropdown-item" to="#action5">
                       Тениски без Принтове
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action6">
+                    <Link className="dropdown-item" to="#action6">
                       Макси Тениски
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action7">
+                    <Link className="dropdown-item" to="#action7">
                       Тениски с Подплънки
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action8">
+                    <Link className="dropdown-item" to="#action8">
                       Поло Тениски
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action9">
+                    <Link className="dropdown-item" to="#action9">
                       Промоции
-                    </a>
+                    </Link>
                   </li>
                 </div>
                 <div className="dropdown-column">
                   <li>
-                    <a className="dropdown-item dropdown-header" href="/Принтове">
+                    <Link
+                      className="dropdown-item dropdown-header"
+                      to="/Принтове"
+                    >
                       Аксесоари
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action10">
+                    <Link className="dropdown-item" to="#action10">
                       Шапки
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action11">
+                    <Link className="dropdown-item" to="#action11">
                       Чанти
-                    </a>
+                    </Link>
                   </li>
                 </div>
               </ul>
             </li>
-            <li className="nav-item dropdown">
-              <a
+            <li className="nav-item ms-2 dropdown">
+              <Link
                 className="nav-link dropdown-toggle dropdown-hover custom-dropdown"
-                href="#"
+                to="#"
                 id="navbarScrollingDropdown2"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Индивидуални клиенти
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown2">
+              </Link>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="navbarScrollingDropdown2"
+              >
                 <div className="dropdown-column">
                   <li>
                     <span className="dropdown-header">Prints</span>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action3">
+                    <Link className="dropdown-item" to="#action3">
                       "Тениска на Месеца"
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action4">
+                    <Link className="dropdown-item" to="#action4">
                       "Избери Любовта"
-                    </a>
+                    </Link>
                   </li>
                 </div>
                 <div className="dropdown-column">
@@ -165,29 +186,29 @@ function NavigationBar() {
                     <span className="dropdown-header">T-shirts</span>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action5">
+                    <Link className="dropdown-item" to="#action5">
                       Тениски без Принтове
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action6">
+                    <Link className="dropdown-item" to="#action6">
                       Макси Тениски
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action7">
+                    <Link className="dropdown-item" to="#action7">
                       Тениски с Подплънки
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action8">
+                    <Link className="dropdown-item" to="#action8">
                       Поло Тениски
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action9">
+                    <Link className="dropdown-item" to="#action9">
                       Промоции
-                    </a>
+                    </Link>
                   </li>
                 </div>
                 <div className="dropdown-column">
@@ -195,21 +216,29 @@ function NavigationBar() {
                     <span className="dropdown-header">Accessories</span>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action10">
+                    <Link className="dropdown-item" to="#action10">
                       Шапки
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#action11">
+                    <Link className="dropdown-item" to="#action11">
                       Чанти
-                    </a>
+                    </Link>
                   </li>
                 </div>
               </ul>
             </li>
+            <li>
+              <Link className="nav-link ms-2" to="/stickers">
+                Стикери
+              </Link>
+            </li>
           </ul>
         </div>
-        <i className="bi bi-basket-fill" style={{ fontSize: "1.5rem", color: "white" }}></i>
+        <i
+          className="bi bi-basket-fill"
+          style={{ fontSize: "1.5rem", color: "white" }}
+        ></i>
       </div>
     </nav>
   );
