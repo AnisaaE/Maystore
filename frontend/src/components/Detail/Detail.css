@@ -1,0 +1,21 @@
+.thumbnail-img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+.thumbnail-img:hover,
+.thumbnail-img.active {
+    border-color: #ff4081;
+}
+/* Стилове за главното изображение */
+.product-image {
+    width: 100%; /* Изображението ще запълва 100% от ширината на родителския контейнер */
+    height: auto; /* Автоматична височина, за да се запазят пропорциите */
+    max-height: 500px; /* Можеш да зададеш максимална височина, ако искаш да ограничиш размерите */
+    object-fit: contain; /* Изрязва изображението, ако е необходимо, за да се побере в контейнера */
+    border-radius: 10px; /* Закръгляне на ъглите, ако е нужно */
+}

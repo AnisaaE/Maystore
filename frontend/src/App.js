@@ -6,6 +6,7 @@ import { Footer } from './components/Footer/Footer';
 import { Stickers } from './components/Stickers/Stickers';
 import Category from './components/Home/Category/Category';
 import ProductCatalog from './components/Catalog/Catalog';
+import Detail from './components/Detail/Detail';
 
 
 
@@ -15,8 +16,8 @@ function App() {
       <NavigationBar/>
       <Routes>
         <Route path="/" element={<Intro/>} />
-      
-        <Route path="/stickers" element={<Stickers/>} />
+      <Route path="/stickers" element={<Stickers/>} />
+      <Route path="/detail" element={<Detail/>} />
       </Routes>
       <ProductCatalog/>
      <Footer/>

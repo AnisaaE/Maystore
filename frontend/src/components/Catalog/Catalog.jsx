@@ -6,31 +6,31 @@ const products = [
       name: "Продукт 1",
       price: "100",
       image: "https://via.placeholder.com/150",
-      link: "/product-1",
+      link: "/detail",
     },
     {
       name: "Продукт 2",
       price: "150",
       image: "https://via.placeholder.com/150",
-      link: "/product-2",
+      link: "/detail",
     },
     {
         name: "Продукт 2",
         price: "150",
         image: "https://via.placeholder.com/150",
-        link: "/product-2",
+        link: "/detail",
       },
       {
         name: "Продукт 2",
         price: "150",
         image: "https://via.placeholder.com/150",
-        link: "/product-2",
+        link: "/detail",
       },
       {
         name: "Продукт 2",
         price: "150",
         image: "https://via.placeholder.com/150",
-        link: "/product-2",
+        link: "/detail",
       },
     
   ];

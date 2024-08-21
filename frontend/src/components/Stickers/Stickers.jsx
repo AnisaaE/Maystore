@@ -77,7 +77,7 @@ export function Stickers() {
         <div className=" col-6 row g-3 mb-4">
           <div className="col-md-6 row">
             <div className="col-12">
-              <label htmlFor="font" className="form-label">
+              <label htmlFor="font" className="form-label pb-0">
                 Шрифт
               </label>
               <select
@@ -93,7 +93,7 @@ export function Stickers() {
             </div>
 
             <div className="col-12">
-              <label htmlFor="color" className="form-label">
+              <label htmlFor="color" className="form-label pb-0">
                 Цвят
               </label>
               <input
