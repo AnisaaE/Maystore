@@ -8,7 +8,7 @@ function NavigationBar() {
   <span class="text">Безплатна доставка за поръчка над 150 лв.</span>
   <i class="bi bi-truck ms-2"></i>
 </div>
-      <nav className="navbar navbar-expand-lg navbar-custom p-3 bg-custom-purple">
+      <nav className="navbar navbar-expand-lg navbar-custom p-3 bg-custom-purple fixed-top">
         <div className="container-fluid montserrat">
           <Link className="navbar-brand" to="/">
             <img
@@ -246,6 +246,9 @@ function NavigationBar() {
           ></i>
         </div>
       </nav>
+      <div style={{ marginTop: "50px" }}>
+      
+      </div>
     </div>
   );
 }

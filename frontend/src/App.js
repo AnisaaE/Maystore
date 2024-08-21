@@ -4,6 +4,8 @@ import NavigationBar from './components/NavigationBar/NavigationBar';
 import { Intro } from './components/Home/Intro';
 import { Footer } from './components/Footer/Footer';
 import { Stickers } from './components/Stickers/Stickers';
+import Category from './components/Home/Category/Category';
+import ProductCatalog from './components/Catalog/Catalog';
 
 
 
@@ -16,6 +18,7 @@ function App() {
       
         <Route path="/stickers" element={<Stickers/>} />
       </Routes>
+      <ProductCatalog/>
      <Footer/>
     </div>
   );
