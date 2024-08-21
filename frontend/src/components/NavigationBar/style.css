@@ -88,3 +88,9 @@ body {
     display: none;
   }
 }
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.9) !important; /* Леко прозрачно бяло */
+}
+.dropdown-item:focus, .dropdown-item:hover {
+  background-color: rgba(119, 117, 117, 0.6) !important; /* Леко прозрачно бяло */
+}
