@@ -19,3 +19,38 @@
     object-fit: contain; /* Изрязва изображението, ако е необходимо, за да се побере в контейнера */
     border-radius: 10px; /* Закръгляне на ъглите, ако е нужно */
 }
+
+#color-options {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .color-option {
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px; /* За кръгчета: border-radius: 50%; */
+    position: relative;
+    transition: border 0.3s ease;
+  }
+  
+  .color-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  .color-option.selected {
+    border: 2px solid #007bff; /* Бордерът, който се появява при избрано квадратче */
+  }
+  
+  .color-option:hover {
+    border: 2px solid #999; /* Леко подсветляване на бордера при hover */
+  }
+  
+  
