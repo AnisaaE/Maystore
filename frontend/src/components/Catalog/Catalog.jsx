@@ -1,4 +1,4 @@
-import "./Catalog.css"; // Тук ще добавим нашите допълнителни CSS стилове
+import "./Catalog.css"; 
 
 function ProductCatalog (){
 const products = [

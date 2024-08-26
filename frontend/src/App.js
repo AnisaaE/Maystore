@@ -16,8 +16,9 @@ function App() {
       <NavigationBar/>
       <Routes>
         <Route path="/" element={<Intro/>} />
-      <Route path="/stickers" element={<Stickers/>} />
-      <Route path="/detail" element={<Detail/>} />
+        <Route path="/:category/:subcategory" element={<Category />} />
+        <Route path=":productId" element={<Detail/>} />
+        <Route path="/stickers" element={<Stickers/>} />
       </Routes>
       <ProductCatalog/>
      <Footer/>
