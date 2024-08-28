@@ -1,73 +1,78 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Detail.css";
+import { useCart } from "../../context/cardContext";
+import { useParams } from "react-router-dom";
+import { ProductContext } from "../../context/productContext";
 
 const Detail = () => {
-  const [selectedColor, setSelectedColor] = useState('');
+  const { addToCart } = useCart();
+  const { productId } = useParams();
+  const { getProduct } = useContext(ProductContext);
+
+  const product = getProduct(productId);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [mainImage, setMainImage] = useState(product.images[0]); // Първото изображение по подразбиране
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
 
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
   };
 
-  const [mainImage, setMainImage] = useState("image1.jpg"); // Постави твоето изображение по подразбиране
-  const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
+  const handleBuyClick = (e) => {
+    e.preventDefault();
+    const productToAdd = {
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
+      color: selectedColor,
+      quantity: quantity,
+      image: mainImage,
+    };
+    addToCart(productToAdd);
+  };
 
   const handleSizeChange = (event) => {
     setSelectedSize(event.target.value);
   };
+
   const handleThumbnailClick = (image) => {
     setMainImage(image);
   };
-
   return (
     <>
       <div className="my-5"></div>
       <div className="container pt-3 bg-light">
         <div className="row m-5 mt-5">
-          <div className="col-md-6">
+        <div className="col-md-6">
             <img
-              src={require("../../assets/images/tshirt-intro.png")}
-              alt="Дамска Спортна Тениска"
+              src={mainImage}
+              alt={product.name}
               className="product-image"
             />
             <div className="d-flex mt-3">
-              <img
-                src={require("../../assets/images/tshirt-intro.png")}
-                alt="thumbnail"
-                className="thumbnail-img"
-                onClick={() => handleThumbnailClick("image1.jpg")}
-              />
-              <img
-                src={require("../../assets/images/tshirt-intro.png")}
-                alt="thumbnail"
-                className="thumbnail-img"
-                onClick={() => handleThumbnailClick("image2.jpg")}
-              />
-              <img
-                src={require("../../assets/images/tshirt-intro.png")}
-                alt="thumbnail"
-                className="thumbnail-img"
-                onClick={() => handleThumbnailClick("image3.jpg")}
-              />
-              <img
-                src={require("../../assets/images/tshirt-intro.png")}
-                alt="thumbnail"
-                className="thumbnail-img"
-                onClick={() => handleThumbnailClick("image4.jpg")}
-              />
+              {product.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`thumbnail-${index}`}
+                  className="thumbnail-img"
+                  onClick={() => handleThumbnailClick(image)}
+                />
+              ))}
             </div>
           </div>
 
           <div className="col-md-6">
-            <h1>Дамска Спортна Тениска</h1>
+            <h1>{product.name}</h1>
             <ul className="list-unstyled">
               <li>100% Полиестер</li>
               <li>145гр./м2</li>
               <li>Произведено в България</li>
             </ul>
-            <p className="text-danger h4">15,00 лв.</p>
+            <p className="text-danger h4">от {product.price} лв.</p>
 
-            <form>
+            <form onSubmit={handleBuyClick}>
               <div className="mb-3">
                 <label htmlFor="size" className="form-label">
                   РАЗМЕР:
@@ -141,47 +146,69 @@ const Detail = () => {
                 </div>
               </div>
               <div className="mb-3">
-      <label htmlFor="color" className="form-label">ЦВЯТ:</label>
-      <div id="color-options" className="d-flex flex-wrap">
-        <label className={`color-option ${selectedColor === '#ffffff' ? 'selected' : ''}`} style={{ backgroundColor: '#ffffff' }}>
-          <input
-            type="radio"
-            name="color"
-            value="#ffffff"
-            checked={selectedColor === '#ffffff'}
-            onChange={handleColorChange}
-          />
-        </label>
-        <label className={`color-option ${selectedColor === '#000000' ? 'selected' : ''}`} style={{ backgroundColor: '#000000' }}>
-          <input
-            type="radio"
-            name="color"
-            value="#000000"
-            checked={selectedColor === '#000000'}
-            onChange={handleColorChange}
-          />
-        </label>
-        <label className={`color-option ${selectedColor === '#28a745' ? 'selected' : ''}`} style={{ backgroundColor: '#28a745' }}>
-          <input
-            type="radio"
-            name="color"
-            value="#28a745"
-            checked={selectedColor === '#28a745'}
-            onChange={handleColorChange}
-          />
-        </label>
-        <label className={`color-option ${selectedColor === '#dc3545' ? 'selected' : ''}`} style={{ backgroundColor: '#dc3545' }}>
-          <input
-            type="radio"
-            name="color"
-            value="#dc3545"
-            checked={selectedColor === '#dc3545'}
-            onChange={handleColorChange}
-          />
-        </label>
-        {/* Добавете още цветове по същия начин */}
-      </div>
-      </div>
+                <label htmlFor="color" className="form-label">
+                  ЦВЯТ:
+                </label>
+                <div id="color-options" className="d-flex flex-wrap">
+                  <label
+                    className={`color-option ${
+                      selectedColor === "#ffffff" ? "selected" : ""
+                    }`}
+                    style={{ backgroundColor: "#ffffff" }}
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      value="#ffffff"
+                      checked={selectedColor === "#ffffff"}
+                      onChange={handleColorChange}
+                    />
+                  </label>
+                  <label
+                    className={`color-option ${
+                      selectedColor === "#000000" ? "selected" : ""
+                    }`}
+                    style={{ backgroundColor: "#000000" }}
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      value="#000000"
+                      checked={selectedColor === "#000000"}
+                      onChange={handleColorChange}
+                    />
+                  </label>
+                  <label
+                    className={`color-option ${
+                      selectedColor === "#28a745" ? "selected" : ""
+                    }`}
+                    style={{ backgroundColor: "#28a745" }}
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      value="#28a745"
+                      checked={selectedColor === "#28a745"}
+                      onChange={handleColorChange}
+                    />
+                  </label>
+                  <label
+                    className={`color-option ${
+                      selectedColor === "#dc3545" ? "selected" : ""
+                    }`}
+                    style={{ backgroundColor: "#dc3545" }}
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      value="#dc3545"
+                      checked={selectedColor === "#dc3545"}
+                      onChange={handleColorChange}
+                    />
+                  </label>
+                  {/* Добавете още цветове по същия начин */}
+                </div>
+              </div>
 
               <div className="mb-3">
                 <label htmlFor="print-front" className="form-label">
@@ -189,7 +216,21 @@ const Detail = () => {
                 </label>
                 <select id="print-front" className="form-select">
                   <option value="">Избери</option>
-                  {/* Добави опции за принт */}
+                  <option value="center-large">
+                    Център голям- 40/28см - 10,00 лв
+                  </option>
+                  <option value="center-medium">
+                    Център среден- 20/28см - 6,00 лв
+                  </option>
+                  <option value="center-small">
+                    Център малък 8/8см - 3,00 лв
+                  </option>
+                  <option value="chest-left">
+                    Гърди ляво - 8/8см - 3,00 лв
+                  </option>
+                  <option value="chest-right">
+                    Гърди дясно - 8/8см - 3,00 лв
+                  </option>
                 </select>
               </div>
 
@@ -199,7 +240,16 @@ const Detail = () => {
                 </label>
                 <select id="print-back" className="form-select">
                   <option value="">Избери</option>
-                  {/* Добави опции за принт */}
+                  <option value="center-large">
+                    Център голям- 40/28см - 10,00 лв
+                  </option>
+                  <option value="center-medium">
+                    Център среден- 20/28см - 6,00 лв
+                  </option>
+                  <option value="center-medium">
+                    {" "}
+                    Врат малък - 8/8см - 4,00 лв
+                  </option>
                 </select>
               </div>
 
@@ -230,16 +280,39 @@ const Detail = () => {
                   onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
+              <div className="mt-4 text-muted small">
+                <p>
+                  <strong>1 бр. ед. цена:</strong> 18,00 лв.
+                </p>
+                <p>
+                  <strong>От 2 до 19 бр. ед. цена:</strong> 13,00 лв.
+                </p>
+                <p>
+                  <strong>Над 20 бр. ед. цена:</strong> 11,00 лв.
+                </p>
+              </div>
 
               <button type="submit" className="btn btn-primary w-100">
                 Купи
               </button>
             </form>
 
-            <p className="mt-4 text-muted small">
-              Бележка за Бизнес клиенти: Отстъпката за количества на едро се
-              отнася за поръчка на брой от размер и цвят.
-            </p>
+            <div className="mt-4 text-muted small text-start">
+              <strong>Бележка за бизнес клиенти:</strong>
+              <ul>
+                <li>
+                  Отстъпката за количества на едро важи при поръчка на конкретен
+                  брой от един и същ размер и цвят.
+                </li>
+                <li>
+                  Поръчките на едро се изпълняват в срок до 10 работни дни.
+                </li>
+                <li>
+                  При по-големи поръчки е възможно да се изисква внос на
+                  определени артикули.
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

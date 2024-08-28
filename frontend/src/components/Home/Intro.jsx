@@ -19,9 +19,9 @@ export function Intro() {
                     Брандирани тениски, шапки, джъмпери, якета и други.
                   </div>
                 </h1>
-                <a href="https://example.com" className="custom-link">
+                <Link to="/all" className="custom-link">
                   Виж повече
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col row h-100 d-none d-md-flex mt-2">

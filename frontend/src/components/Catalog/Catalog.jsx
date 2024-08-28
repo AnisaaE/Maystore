@@ -1,67 +1,32 @@
-import "./Catalog.css"; 
+import { useContext } from "react";
+import { ProductContext } from "../../context/productContext";
+import "./Catalog.css";
+import ProductCard from "./ProductCard";
+import { useParams } from "react-router-dom";
 
-function ProductCatalog (){
-const products = [
-    {
-      name: "Продукт 1",
-      price: "100",
-      image: "https://via.placeholder.com/150",
-      link: "/detail",
-    },
-    {
-      name: "Продукт 2",
-      price: "150",
-      image: "https://via.placeholder.com/150",
-      link: "/detail",
-    },
-    {
-        name: "Продукт 2",
-        price: "150",
-        image: "https://via.placeholder.com/150",
-        link: "/detail",
-      },
-      {
-        name: "Продукт 2",
-        price: "150",
-        image: "https://via.placeholder.com/150",
-        link: "/detail",
-      },
-      {
-        name: "Продукт 2",
-        price: "150",
-        image: "https://via.placeholder.com/150",
-        link: "/detail",
-      },
-    
-  ];
+function ProductCatalog() {
+  const { getCatalogByCategory } = useContext(ProductContext);
+  const { category, subcategory } = useParams();
 
+  let products = getCatalogByCategory(category ? category : "all", subcategory);
   return (
-    <div className="container m-5 ">
-      <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-        {products.map((product, index) => (
-          <div key={index} className="col">
-            <a href={product.link} className="text-decoration-none">
-              <div className="card h-100 product-card position-relative">
-                <img
-                  src={product.image}
-                  className="card-img-top"
-                  alt={product.name}
-                />
-                <div className="card-body text-center">
-                  <h5 className="card-title text-dark">{product.name}</h5>
-                  <div className="separator"></div>
-                  <p className="card-text text-primary">Цена: {product.price} лв.</p>
-                </div>
-                <button className="btn btn-outline-danger btn-sm favorite-icon position-absolute top-0 end-0 m-2">
-                  <i className="bi bi-heart"></i>
-                </button>
-              </div>
-            </a>
-          </div>
+    <div className="container m-5">
+      {category && (
+        <h2 className="category-title pt-5">
+          {subcategory ? ` ${subcategory}` : `${category}`}
+        </h2>
+      )}
+
+      <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center mt-3">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      {products.length === 0 && (
+        <h3 className="no-articles">No articles yet</h3>
+      )}
     </div>
   );
-};
+}
 
 export default ProductCatalog;
