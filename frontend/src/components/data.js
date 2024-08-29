@@ -33,6 +33,6 @@ export let productsData = [
       images: [pic],
       id: "4",
       category: "Аксесоари",
-      subcategory: "Чанти",
+      subcategory: "Баджове",
     },
   ];

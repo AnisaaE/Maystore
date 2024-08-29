@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import "./Stickers.css";
+import { useCart } from "../../context/cardContext";
 
 export function Stickers() {
+  const { addToCart } = useCart();
+
   const [stickerOptions, setStickerOptions] = useState({
+    name: "Стикер",
     text: "Самир",
     font: "Arial",
     color: "#FF0000",
@@ -61,10 +65,19 @@ export function Stickers() {
     }));
   };
 
+  const handleOrder = () => {
+    const stickerToAdd = {
+      ...stickerOptions,
+      id: `${stickerOptions.text}-${stickerOptions.font}-${stickerOptions.color}-${stickerOptions.height}-${stickerOptions.width}`, // Generate a unique ID for each sticker
+    };
+
+    addToCart(stickerToAdd); // Add the configured sticker to the cart
+  };
+
   return (
-    <div className="container bg-light p-4 rounded">
+    <div className="container bg-light p-1 rounded">
       {/* Header Section */}
-      <div className="text-center m-5">
+      <div className="text-center m-4">
         <h1 className="fw-bold">НАПРАВИ СИ НАДПИС САМ</h1>
         <ul className="list-inline">
           <li className="list-inline-item mx-2 text-success">бързо</li>
@@ -242,7 +255,7 @@ export function Stickers() {
         </div>
 
         <div className="col-md-4 d-flex align-items-end justify-content-end">
-          <button className="btn btn-danger btn-lg w-100">Поръчай</button>
+          <button className="btn btn-danger btn-lg w-100" onClick={handleOrder}>Поръчай</button>
         </div>
       </div>
 

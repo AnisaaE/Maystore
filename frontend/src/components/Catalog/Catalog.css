@@ -51,6 +51,7 @@
   height: 350px;
   overflow: hidden;
   margin: 0 auto;
+  margin-top: 10px;
 }
 
 /* Стил за самото изображение */

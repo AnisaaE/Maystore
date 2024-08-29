@@ -1,35 +1,87 @@
 import React, { useContext, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+
 import "./Detail.css";
 import { useCart } from "../../context/cardContext";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../../context/productContext";
 
+import { useSnackbar } from 'notistack';
+
 const Detail = () => {
-  const { addToCart } = useCart();
-  const { productId } = useParams();
-  const { getProduct } = useContext(ProductContext);
 
-  const product = getProduct(productId);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [mainImage, setMainImage] = useState(product.images[0]); // Първото изображение по подразбиране
-  const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
+    const { addToCart } = useCart();
+    const { productId } = useParams();
+    const { getProduct } = useContext(ProductContext);
 
+    const product = getProduct(productId);
+    const [selectedColor, setSelectedColor] = useState("");
+    const [mainImage, setMainImage] = useState(product.images[0]);
+    const [quantity, setQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState("");
+    const [printFront, setPrintFront] = useState('');
+    const [printBack, setPrintBack] = useState('');
+    const [uploadFront, setUploadFront] = useState(null);
+    const [uploadBack, setUploadBack] = useState(null);
+  
+    const handlePrintFrontChange = (e) => {
+      setPrintFront(e.target.value);
+    };
+  
+    const handlePrintBackChange = (e) => {
+      setPrintBack(e.target.value);
+    };
+  
+    const handleUploadFrontChange = (e) => {
+      setUploadFront(e.target.files[0]);
+    };
+  
+    const handleUploadBackChange = (e) => {
+      setUploadBack(e.target.files[0]);
+    };
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
   };
+  const calculateFinalPrice = () => {
+    let basePrice = Number(product.price); 
+    let additionalPrice = 0; 
+
+    if (printFront === 'center-large') additionalPrice += 10;
+    else if (printFront === 'center-medium') additionalPrice += 6;
+    else if (printFront === 'center-small') additionalPrice += 3;
+    else if (printFront === 'chest-left' || printFront === 'chest-right')
+      additionalPrice += 3;
+
+    if (printBack === 'center-large') additionalPrice += 10;
+    else if (printBack === 'center-medium') additionalPrice += 6;
+    else if (printBack === 'neck-small') additionalPrice += 4;
+
+    const finalPrice = (basePrice + additionalPrice) * quantity;
+    return finalPrice;
+  };
+
+  const finalPrice = calculateFinalPrice()
 
   const handleBuyClick = (e) => {
+    const uniqueKey = uuidv4();
     e.preventDefault();
     const productToAdd = {
+      uniqueKey,
       name: product.name,
-      price: product.price,
+      price: finalPrice,
       size: selectedSize,
       color: selectedColor,
       quantity: quantity,
       image: mainImage,
+      printFront: printFront,
+      printBack: printBack,
+      uploadFront: uploadFront ? uploadFront.name : null,
+      uploadBack: uploadBack ? uploadBack.name : null, 
+      id: productId
     };
     addToCart(productToAdd);
+    enqueueSnackbar('Успешно добавлено в кошницата!', { variant: 'success' });
   };
 
   const handleSizeChange = (event) => {
@@ -206,7 +258,6 @@ const Detail = () => {
                       onChange={handleColorChange}
                     />
                   </label>
-                  {/* Добавете още цветове по същия начин */}
                 </div>
               </div>
 
@@ -214,7 +265,8 @@ const Detail = () => {
                 <label htmlFor="print-front" className="form-label">
                   ОТПРЕД – ПРИНТ:
                 </label>
-                <select id="print-front" className="form-select">
+                <select id="print-front" className="form-select" value={printFront}
+          onChange={handlePrintFrontChange}>
                   <option value="">Избери</option>
                   <option value="center-large">
                     Център голям- 40/28см - 10,00 лв
@@ -238,7 +290,8 @@ const Detail = () => {
                 <label htmlFor="print-back" className="form-label">
                   ГРЪБ – ПРИНТ:
                 </label>
-                <select id="print-back" className="form-select">
+                <select id="print-back" className="form-select" value={printBack}
+          onChange={handlePrintBackChange}>
                   <option value="">Избери</option>
                   <option value="center-large">
                     Център голям- 40/28см - 10,00 лв
@@ -257,14 +310,15 @@ const Detail = () => {
                 <label htmlFor="upload-front" className="form-label">
                   Прикачи файл за принт – Отпред:
                 </label>
-                <input type="file" id="upload-front" className="form-control" />
+                <input type="file" id="upload-front" className="form-control" onChange={handleUploadFrontChange} />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="upload-back" className="form-label">
                   Прикачи файл за принт – Гръб:
                 </label>
-                <input type="file" id="upload-back" className="form-control" />
+                <input type="file" id="upload-back" className="form-control" onChange={handleUploadBackChange}
+                />
               </div>
 
               <div className="mb-3">
@@ -292,7 +346,7 @@ const Detail = () => {
                 </p>
               </div>
 
-              <button type="submit" className="btn btn-primary w-100">
+              <button type="submit" className="btn btn-danger w-100">
                 Купи
               </button>
             </form>

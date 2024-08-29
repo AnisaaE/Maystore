@@ -63,13 +63,8 @@ function NavigationBar() {
                   aria-labelledby="navbarScrollingDropdown"
                 >
                   <div className="dropdown-column">
-                    <li>
-                      <Link
-                        className="dropdown-item dropdown-header"
-                        to="/clothes"
-                      >
-                        Дрехи
-                      </Link>
+                  <li>
+                      <span className="dropdown-header">Дрехи</span>
                     </li>
                     <li>
                       <Link className="dropdown-item" to="/Дрехи/Тениски">
@@ -127,38 +122,28 @@ function NavigationBar() {
                     </li>
                   </div>
                   <div className="dropdown-column">
-                    <li>
-                      <Link
-                        className="dropdown-item dropdown-header"
-                        to="/Aксесоари"
-                      >
-                        Аксесоари
-                      </Link>
+                  <li>
+                      <span className="dropdown-header">Аксесоари</span>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Aксесоари/Шапки">
+                      <Link className="dropdown-item" to="/Аксесоари/Шапки">
                         Шапки
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Aксесоари/Чанти">
+                      <Link className="dropdown-item" to="/Аксесоари/Чанти">
                         Чанти
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Aксесоари/Бандажи">
+                      <Link className="dropdown-item" to="/Аксесоари/Баджове">
                         Баджове
                       </Link>
                     </li>
                   </div>
                   <div className="dropdown-column">
-                    <li>
-                      <Link
-                        className="dropdown-item dropdown-header"
-                        to="/genders"
-                      >
-                        Пол
-                      </Link>
+                  <li>
+                      <span className="dropdown-header">Пол</span>
                     </li>
                     <li>
                       <Link className="dropdown-item" to="/genders/male">
@@ -200,9 +185,6 @@ function NavigationBar() {
                   aria-labelledby="navbarScrollingDropdown2"
                 >
                   <div className="dropdown-column">
-                    <li>
-                      <span className="dropdown-header">Prints</span>
-                    </li>
                     <li>
                       <Link className="dropdown-item" to="Подаръци/Чаши">
                         Чаши

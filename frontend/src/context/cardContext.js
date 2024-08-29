@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
+
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
@@ -11,9 +12,9 @@ export const CartProvider = ({ children }) => {
     setCartItems((prevItems) => [...prevItems, product]);
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (uniqueKey) => {
     setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
+      prevItems.filter((item) => item.uniqueKey !== uniqueKey)
     );
   };
 

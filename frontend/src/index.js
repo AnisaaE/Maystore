@@ -6,13 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <SnackbarProvider maxSnack={3}  
+    anchorOrigin={{
+      vertical: 'bottom', // Position vertically at the top
+      horizontal: 'right', // Position horizontally at the right
+    }}> 
     <App />
+    </SnackbarProvider>
     </BrowserRouter>   
   </React.StrictMode>
 );
