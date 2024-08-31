@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const productSchema = new Schema({
   id: {
-    type: String,
+    type: Number,
     required: true,
     unique: true 
   },
@@ -38,7 +38,7 @@ const productSchema = new Schema({
   timestamps: true 
 });
 
-// Създай модел на базата на схемата
+
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;
