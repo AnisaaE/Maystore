@@ -1,0 +1,21 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background-color: white;
+    padding: 0px 50px;
+    margin-bottom: 1px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.logo-conatiner{
+    width: 200px;
+
+}
+.nav-logo {
+    height: 80px;
+    
+}
+.nav-profile{
+    width: 30px;
+}
