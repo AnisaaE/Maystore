@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(routes);
 
-app.use ("/images", express.static('upload/images'));
+app.use ("/upload", express.static('upload'));
 
 mongoose.connect("mongodb+srv://anisa:kWaftKWtcAhB567M@cluster0.srvzl.mongodb.net/maystore", {
     useNewUrlParser: true,
