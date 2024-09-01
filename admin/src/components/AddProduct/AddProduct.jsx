@@ -1,7 +1,8 @@
 // src/components/AddProduct.jsx
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -82,6 +83,17 @@ const AddProduct = () => {
       console.error('Error adding product:', error);
       alert('Failed to add product.');
     }
+  
+    setFormData({
+      name: '',
+      price: '',
+      category: '',
+      subcategory: '',
+    });
+    setImages(['']);
+  
+    // Redirect to home page
+    navigate('/allproducts');
   };
   
 

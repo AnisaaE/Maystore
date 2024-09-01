@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const productController = require('./controllers/productController');
+const userController = require('./controllers/userController');
 
 const upload = require('./config/multerConfig');
 
@@ -11,6 +12,7 @@ router.post('/add', upload.array('images'), productController.addProduct);
   
 router.post('/removeProduct', productController.removeProduct);
 
-router.get('/getAllProducts', productController.getAllProducts);
+router.get('/allProducts', productController.getAllProducts);
+router.post('/register', userController.register);
 
 module.exports = router

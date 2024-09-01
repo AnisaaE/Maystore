@@ -46,6 +46,7 @@ const addProduct = async (req, res) => {
 };
 
 const removeProduct = async (req, res) => {
+  console.log(req.body);
   try {
     const { id } = req.body;
 
@@ -74,7 +75,16 @@ const getAllProducts = async (req, res) => {
     res.status(500).json({ success: false, message: 'An error occurred while fetching products' });
   }
 };
-
+const getProductsByCategory = async (req, res) => {
+  try {
+    const { category } = req.body;
+    const products = await Product.find({ category });
+    res.json({ success: true, products });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ success: false, message: 'An error occurred while fetching products' });
+  }
+};
 module.exports = {
   uploadImage,
   addProduct,
