@@ -15,8 +15,8 @@ export function Intro() {
                   <div className="display-2 pb-2 ">
                     Реклама за вашия бизнес или събитие
                   </div>
-                  <div className="display-6">
-                    Брандирани тениски, шапки, джъмпери, якета и други.
+                  <div className="display-6 ">
+                 <small> Подсилете екипния дух и оставете трайно впечатление на клиентите и партньорите си</small>
                   </div>
                 </h1>
                 <Link to="/all" className="custom-link">
@@ -43,71 +43,86 @@ export function Intro() {
                     className="overlay-image overlay2"
                   />
                   <img
-                    src={require("../../assets/images/overlay3.jpeg")}
+                    src={require("../../assets/images/overlay3.png")}
                     alt="overlay3"
                     className="overlay-image overlay3"
                   />
-                  <div class="overlay-text overlay4">Най-добрия кум</div>
+                  <img
+                    src={require("../../assets/images/overlay4.png")}
+                    alt="overlay4"
+                    className="overlay-image overlay4"
+                  />
                   <img
                     src={require("../../assets/images/overlay5.png")}
                     alt="overlay5"
                     className="overlay-image overlay5"
                   />
-                  <div class="overlay-text overlay6">
-                    Рекламно студио Gazdzhalov
-                  </div>
+                   <img
+                    src={require("../../assets/images/overlay6.png")}
+                    alt="overlay6"
+                    className="overlay-image overlay6"
+                  />
+                 
                 </div>
               
               <div className="col flexClass h-100 mt-2 d-none d-lg-flex">
                 <div className="circleDiv">
-                  <Link to="/path6">
+                  <Link to="/clothing/Поло%20тениски">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/polotshirt.png")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />
                   </Link>
                 </div>
                 <div className="circleDiv ">
-                  <Link to="/path6">
+                  <Link to="/clothing/Суитчъри">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/sweatshirt.png")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />
                   </Link>
                 </div>
                 <div className="circleDiv">
-                  <Link to="/path6">
+                  <Link to="/clothing/Престилки">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/apron.jpeg")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />
                   </Link>
                 </div>
                 <div className="circleDiv">
-                  <Link to="/path6">
+                  <Link to="/clothing/Шапки">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/cap.jpeg")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />
                   </Link>
                 </div>
                 <div className="circleDiv">
-                  <Link to="/path6">
+                  <Link to="/gifts/Етикети">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/th (14).jpeg")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />
                   </Link>
                 </div>
                 <div className="circleDiv">
-                  <Link to="/path6">
+                  <Link to="/gifts/Печати">
                     <img
-                      src={require("../../assets/images/tshirt-intro.png")}
+                      src={require("../../assets/images/th (13).jpeg")}
+                      alt="tshirt-intro"
+                      className="rounded-circle border-white border-3"
+                    />
+                  </Link>
+                </div> <div className="circleDiv">
+                  <Link to="/gifts/Химикали">
+                    <img
+                      src={require("../../assets/images/pen.jpeg")}
                       alt="tshirt-intro"
                       className="rounded-circle border-white border-3"
                     />

@@ -24,7 +24,7 @@ const Sidebar = () => {
           <p className="sidebar__text col-6">Add Product</p>
         </div>
       </Link>
-      <Link to="/allproducts" style={{ textDecoration: "none",  color: "black"}}>
+      <Link to="/products" style={{ textDecoration: "none",  color: "black"}}>
         <div className="sidebar-item row ">
           <svg
             xmlns="http://www.w3.org/2000/svg"

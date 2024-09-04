@@ -6,7 +6,6 @@ const ShoppingCart = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Function to calculate total price including print options and quantity
   const calculateTotalPrice = () => {
     let total = 0;
 

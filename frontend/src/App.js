@@ -11,6 +11,7 @@ import { Stickers } from "./components/Stickers/Stickers";
 import ProductCatalog from "./components/Catalog/Catalog";
 import Detail from "./components/Detail/Detail";
 import ShoppingCart from "./components/ShoppingCard/ShoppingCard";
+import CheckoutComponent from "./components/Check-out/checkOut";
 function App() {
   return (
     <div className="App">
@@ -23,11 +24,11 @@ function App() {
               <Route path="/stickers" element={<Stickers />} />
               <Route path="/all" element={<ProductCatalog />} />
               <Route path="/cart" element={<ShoppingCart />} />
+              <Route path="/clothing/:subcategory" element={<ProductCatalog />} />
+              <Route path="/gifts/:subcategory" element={<ProductCatalog />} />
+              <Route path="/cart" element={<ShoppingCart />} />
               <Route path="/product/:productId" element={<Detail />} />
-              <Route
-                path="/:category/:subcategory"
-                element={<ProductCatalog />}
-              />
+              <Route path="/checkout" element={<CheckoutComponent />} />
             </Routes>
           </ProductProvider>
         </CartProvider>

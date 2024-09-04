@@ -7,7 +7,7 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:4000/allProducts");
+        const response = await fetch("http://localhost:4000/products");
         const data = await response.json();
         console.log(data);
         setItems(data.products);

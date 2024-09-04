@@ -7,15 +7,13 @@ export const productsServiceBuilder = () => {
 
   const getAll = async () => {
     const result = await request.get(baseUrl);
-    const products = Object.values(result);
+    console.log(result);
+    const products = result.products;
+
+    console.log(products );
 
     return products;
   };
-
-const getProductsByCategory = async (category) => {
-const result = await request.get(`${baseUrl}/${category}`);
-return result;
-}
 
   const getOne = async (productId) => {
     const result = await request.get(`${baseUrl}/${productId}`);
@@ -31,7 +29,6 @@ return result;
   return {
     getAll,
     getOne,
-    getProductsByCategory,
     productFind,
   };
 };

@@ -96,3 +96,15 @@ body {
 .order-btn:hover {
     background-color: darkred;
 }
+
+.transportSection{
+    height: 40vh ;
+}
+
+.transportImg{
+    max-height: 40vh;
+    width: 110%;
+    overflow: hidden;
+    object-fit: contain;
+    
+}

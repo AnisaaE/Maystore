@@ -20,7 +20,7 @@ function NavigationBar() {
               className="img-fluid d-inline-block align-top logo"
             />
           </Link>
-          <form className="d-flex me-4">
+          {/* <form className="d-flex me-4">
             <input
               className="form-control rounded-start-pill"
               type="search"
@@ -33,7 +33,7 @@ function NavigationBar() {
             >
               <i className="bi bi-search search-icon"></i>
             </button>
-          </form>
+          </form> */}
           <button
             className="navbar-toggler border border-white border-3"
             type="button"
@@ -67,56 +67,51 @@ function NavigationBar() {
                       <span className="dropdown-header">Дрехи</span>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Дрехи/Тениски">
+                      <Link className="dropdown-item" to="/clothing/Тениски">
                         Тениски
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="dropdown-item"
-                        to="/Дрехи/Поло%20тениски"
+                        to="/clothing/Поло%20тениски"
                       >
                         Поло тениски
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Дрехи/Суитчъри">
+                      <Link className="dropdown-item" to="/clothing/Суитчъри">
                         Суитчъри
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/Дрехи/">
-                        Спортни долници
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="dropdown-item"
-                        to="/Дрехи/Спортен%20Екип"
+                        to="/clothing/Спортен%20Екип"
                       >
                         Спортни екипи
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Дрехи/Якета">
+                      <Link className="dropdown-item" to="/clothing/Якета">
                         Якета
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Дрехи/Панталони">
+                      <Link className="dropdown-item" to="/clothing/Панталони">
                         Панталони
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="dropdown-item"
-                        to="/Дрехи/Светлоотразителни"
+                        to="/clothing/Светлоотразителни"
                       >
                         Светлоотразителни
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Дрехи/Престилки">
+                      <Link className="dropdown-item" to="/clothing/Престилки">
                         Престилки
                       </Link>
                     </li>
@@ -126,22 +121,22 @@ function NavigationBar() {
                       <span className="dropdown-header">Аксесоари</span>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Аксесоари/Шапки">
+                      <Link className="dropdown-item" to="/clothing/Шапки">
                         Шапки
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Аксесоари/Чанти">
+                      <Link className="dropdown-item" to="/clothing/Чанти">
                         Чанти
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Аксесоари/Баджове">
+                      <Link className="dropdown-item" to="/clothing/Баджове">
                         Баджове
                       </Link>
                     </li>
                   </div>
-                  <div className="dropdown-column">
+                  {/* <div className="dropdown-column">
                   <li>
                       <span className="dropdown-header">Пол</span>
                     </li>
@@ -165,7 +160,7 @@ function NavigationBar() {
                         Унисекс
                       </Link>
                     </li>
-                  </div>
+                  </div> */}
                 </ul>
               </li>
 
@@ -178,7 +173,7 @@ function NavigationBar() {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Подаръци
+                  Фирмени артикули
                 </Link>
                 <ul
                   className="dropdown-menu"
@@ -186,37 +181,37 @@ function NavigationBar() {
                 >
                   <div className="dropdown-column">
                     <li>
-                      <Link className="dropdown-item" to="Подаръци/Чаши">
+                      <Link className="dropdown-item" to="/gifts/Чаши">
                         Чаши
                       </Link>
                     </li>
 
                     <li>
-                      <Link className="dropdown-item" to="Подаръци/Химикали">
+                      <Link className="dropdown-item" to="/gifts/Химикали">
                         Химикали
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="dropdown-item"
-                        to="Подаръци/Ключодържатели"
+                        to="/gifts/Ключодържатели"
                       >
                         Ключодържатели
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="Подаръци/Тефтери">
+                      <Link className="dropdown-item" to="/gifts/Тефтери">
                         Тефтери
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="Подаръци/Печати">
+                      <Link className="dropdown-item" to="/gifts/Печати">
                         Печати
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="Подаръци/Чанти">
-                        Чанти
+                      <Link className="dropdown-item" to="/gifts/Етикети">
+                        Етикети
                       </Link>
                     </li>
                   </div>
@@ -234,6 +229,9 @@ function NavigationBar() {
               </li>
             </ul>
           </div>
+          <Link to="/login" className="cart-icon">
+          <i class="bi bi-person-circle" style={{ fontSize: "1.5rem", color: "white" }}></i>
+          </Link>
           <Link to="/cart" className="cart-icon">
             <i
               className="bi bi-cart3"

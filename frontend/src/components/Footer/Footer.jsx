@@ -9,20 +9,17 @@ export function Footer() {
         style={{ backgroundColor: "#6606a5" }}
       >
         <div className="me-5">
-          <span>Get connected with us on social networks:</span>
+          <span>Свържете с нас и в социалните мрежи:</span>
         </div>
 
         <div>
-          <a href="#" className="text-white me-4">
+          <a href="https://www.facebook.com/profile.php?id=61556690076040" className="text-white me-4">
             <i className="bi bi-facebook"></i>
           </a>
-          <a href="#" className="text-white me-4">
-            <i className="bi bi-twitter"></i>
-          </a>
-          <a href="#" className="text-white me-4">
+          <a href="https://gadzhalov.com/" className="text-white me-4">
             <i className="bi bi-google"></i>
           </a>
-          <a href="#" className="text-white me-4">
+          <a href="https://www.instagram.com/gadzhalov.studio/" className="text-white me-4">
             <i className="bi bi-instagram"></i>
           </a>
         </div>
@@ -33,7 +30,7 @@ export function Footer() {
         <div className="container text-center text-md-start mt-5">
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold">Company name</h6>
+              <h6 className="text-uppercase fw-bold">Maystore</h6>
               <hr
                 className="mb-4 mt-0 d-inline-block mx-auto"
                 style={{
@@ -43,9 +40,7 @@ export function Footer() {
                 }}
               />
               <p>
-                Here you can use rows and columns to organize your footer
-                content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit.
+                Стилни решения с диззай по ваш избор. Персонализация на най-високо ниво – идеално за бизнеси, събития и подаръци.
               </p>
             </div>
             {/* Grid column */}
@@ -53,7 +48,7 @@ export function Footer() {
             {/* Grid column */}
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
               {/* Links */}
-              <h6 className="text-uppercase fw-bold">Products</h6>
+              <h6 className="text-uppercase fw-bold">Продукти</h6>
               <hr
                 className="mb-4 mt-0 d-inline-block mx-auto"
                 style={{
@@ -64,22 +59,22 @@ export function Footer() {
               />
               <p>
                 <a href="#!" className="text-white">
-                  MDBootstrap
+                  Работно облекло
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  MDWordPress
+                  Стикери
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  BrandFlow
+                  Фирмени артикули
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  Bootstrap Angular
+                  Още
                 </a>
               </p>
             </div>
@@ -88,7 +83,7 @@ export function Footer() {
             {/* Grid column */}
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               {/* Links */}
-              <h6 className="text-uppercase fw-bold">Useful links</h6>
+              <h6 className="text-uppercase fw-bold">Полезни линкове</h6>
               <hr
                 className="mb-4 mt-0 d-inline-block mx-auto"
                 style={{
@@ -99,22 +94,22 @@ export function Footer() {
               />
               <p>
                 <a href="#!" className="text-white">
-                  Your Account
+                  Промоции
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  Become an Affiliate
+                  
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  Shipping Rates
+                  Комплекти
                 </a>
               </p>
               <p>
                 <a href="#!" className="text-white">
-                  Help
+                  Помощ
                 </a>
               </p>
             </div>
@@ -123,7 +118,7 @@ export function Footer() {
             {/* Grid column */}
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
-              <h6 className="text-uppercase fw-bold">Contact</h6>
+              <h6 className="text-uppercase fw-bold">Контакти</h6>
               <hr
                 className="mb-4 mt-0 d-inline-block mx-auto"
                 style={{
@@ -133,13 +128,13 @@ export function Footer() {
                 }}
               />
               <p>
-                <i className="bi bi-geo-alt"></i> New York, NY 10012, US
+                <i className="bi bi-geo-alt"></i> Рудозем, България
               </p>
               <p>
-                <i className="bi bi-envelope"></i> info@example.com
+                <i className="bi bi-envelope"></i> studio@gadzhalov.com
               </p>
               <p>
-                <i className="bi bi-telephone"></i> + 01 234 567 88
+                <i className="bi bi-telephone"></i> +359 877 70 70 18
               </p>
             </div>
             {/* Grid column */}

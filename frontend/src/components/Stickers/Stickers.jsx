@@ -77,17 +77,17 @@ export function Stickers() {
   return (
     <div className="container bg-light p-1 rounded">
       {/* Header Section */}
-      <div className="text-center m-4">
+      {/* <div className="text-center m-4">
         <h1 className="fw-bold">НАПРАВИ СИ НАДПИС САМ</h1>
         <ul className="list-inline">
           <li className="list-inline-item mx-2 text-success">бързо</li>
           <li className="list-inline-item mx-2 text-success">лесно</li>
           <li className="list-inline-item mx-2 text-success">качествено</li>
         </ul>
-      </div>
+      </div> */}
 
       {/* Description Section */}
-      <div className="row">
+      <div className="row mt-5">
         <div className="col-md-6 mb-4">
           <p>
             Надписите са изработени от висококачествено PVC каст фолио ORAFOL /
@@ -259,8 +259,17 @@ export function Stickers() {
         </div>
       </div>
 
-      <div className="text-center mt-3">
+      {/* <div className="text-center mt-3">
         <p className="text-muted">Срок на изработка 1-2 работни дни.</p>
+      </div> */}
+      <div className="row transportSection mx-4 d-flex justify-content-center my-1 mb-5">
+        <div className="col-md-6 px-4 d-flex flex-column pt-3">
+          <div className="display-6">Tранспортна реклама за нашите бизнес клиенти</div>
+          <p className="text-muted mt-3">Свържете се с нас за получаване на оферта </p>
+        </div>
+        <div className="col-md-4 transportImg">
+          <img src={require("../../assets/images/transport.jpeg")} alt="" className="transportImg"/>
+        </div>
       </div>
     </div>
   );

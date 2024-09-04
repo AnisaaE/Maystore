@@ -15,7 +15,6 @@ const AddProduct = () => {
       'Тениски',
       'Поло тениски',
       'Суитчъри',
-      'Спортни долници',
       'Спортни екипи',
       'Якета',
       'Панталони',
@@ -93,7 +92,7 @@ const AddProduct = () => {
     setImages(['']);
   
     // Redirect to home page
-    navigate('/allproducts');
+    navigate('/products');
   };
   
 

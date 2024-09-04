@@ -1,67 +1,80 @@
-import React, { useContext, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from "react";
+import { productsServiceBuilder } from "../../services/productsService";
+import { v4 as uuidv4 } from "uuid";
 
 import "./Detail.css";
 import { useCart } from "../../context/cardContext";
 import { useParams } from "react-router-dom";
-import { ProductContext } from "../../context/productContext";
 
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 
 const Detail = () => {
-
+  const productService = productsServiceBuilder();
   const { enqueueSnackbar } = useSnackbar();
-    const { addToCart } = useCart();
-    const { productId } = useParams();
-    const { getProduct } = useContext(ProductContext);
+  const { addToCart } = useCart();
+  const { productId } = useParams();
 
-    const product = getProduct(productId);
-    const [selectedColor, setSelectedColor] = useState("");
-    const [mainImage, setMainImage] = useState(product.images[0]);
-    const [quantity, setQuantity] = useState(1);
-    const [selectedSize, setSelectedSize] = useState("");
-    const [printFront, setPrintFront] = useState('');
-    const [printBack, setPrintBack] = useState('');
-    const [uploadFront, setUploadFront] = useState(null);
-    const [uploadBack, setUploadBack] = useState(null);
-  
-    const handlePrintFrontChange = (e) => {
-      setPrintFront(e.target.value);
-    };
-  
-    const handlePrintBackChange = (e) => {
-      setPrintBack(e.target.value);
-    };
-  
-    const handleUploadFrontChange = (e) => {
-      setUploadFront(e.target.files[0]);
-    };
-  
-    const handleUploadBackChange = (e) => {
-      setUploadBack(e.target.files[0]);
-    };
+  const [product, setProduct] = useState({});
+  const [selectedColor, setSelectedColor] = useState("");
+  const [mainImage, setMainImage] = useState();
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
+  const [printFront, setPrintFront] = useState("");
+  const [printBack, setPrintBack] = useState("");
+  const [uploadFront, setUploadFront] = useState(null);
+  const [uploadBack, setUploadBack] = useState(null);
+
+  useEffect(() => {
+    productService
+      .getOne(productId)
+      .then((res) => {
+        setProduct(res);
+        setMainImage(res.images[0]);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error("Error loading product:", err);
+      });
+  }, [productId]);
+  const handlePrintFrontChange = (e) => {
+    setPrintFront(e.target.value);
+  };
+
+  const handlePrintBackChange = (e) => {
+    setPrintBack(e.target.value);
+  };
+
+  const handleUploadFrontChange = (e) => {
+    setUploadFront(e.target.files[0]);
+  };
+
+  const handleUploadBackChange = (e) => {
+    setUploadBack(e.target.files[0]);
+  };
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
   };
   const calculateFinalPrice = () => {
-    let basePrice = Number(product.price); 
-    let additionalPrice = 0; 
+    console.log(product);
 
-    if (printFront === 'center-large') additionalPrice += 10;
-    else if (printFront === 'center-medium') additionalPrice += 6;
-    else if (printFront === 'center-small') additionalPrice += 3;
-    else if (printFront === 'chest-left' || printFront === 'chest-right')
+    let basePrice = Number(product.price);
+    let additionalPrice = 0;
+
+    if (printFront === "center-large") additionalPrice += 10;
+    else if (printFront === "center-medium") additionalPrice += 6;
+    else if (printFront === "center-small") additionalPrice += 3;
+    else if (printFront === "chest-left" || printFront === "chest-right")
       additionalPrice += 3;
 
-    if (printBack === 'center-large') additionalPrice += 10;
-    else if (printBack === 'center-medium') additionalPrice += 6;
-    else if (printBack === 'neck-small') additionalPrice += 4;
+    if (printBack === "center-large") additionalPrice += 10;
+    else if (printBack === "center-medium") additionalPrice += 6;
+    else if (printBack === "neck-small") additionalPrice += 4;
 
     const finalPrice = (basePrice + additionalPrice) * quantity;
     return finalPrice;
   };
 
-  const finalPrice = calculateFinalPrice()
+  const finalPrice = calculateFinalPrice();
 
   const handleBuyClick = (e) => {
     const uniqueKey = uuidv4();
@@ -77,11 +90,11 @@ const Detail = () => {
       printFront: printFront,
       printBack: printBack,
       uploadFront: uploadFront ? uploadFront.name : null,
-      uploadBack: uploadBack ? uploadBack.name : null, 
-      id: productId
+      uploadBack: uploadBack ? uploadBack.name : null,
+      id: productId,
     };
     addToCart(productToAdd);
-    enqueueSnackbar('Успешно добавлено в кошницата!', { variant: 'success' });
+    enqueueSnackbar("Успешно добавлено в кошницата!", { variant: "success" });
   };
 
   const handleSizeChange = (event) => {
@@ -96,35 +109,33 @@ const Detail = () => {
       <div className="my-5"></div>
       <div className="container pt-3 bg-light">
         <div className="row m-5 mt-5">
-        <div className="col-md-6">
-            <img
-              src={mainImage}
-              alt={product.name}
-              className="product-image"
-            />
+          <div className="col-md-6">
+            <img src={mainImage} alt={product.name} className="product-image" />
             <div className="d-flex mt-3">
-              {product.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`thumbnail-${index}`}
-                  className="thumbnail-img"
-                  onClick={() => handleThumbnailClick(image)}
-                />
-              ))}
+              {product?.images?.length > 0
+                ? product.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`thumbnail-${index}`}
+                      className="thumbnail-img"
+                      onClick={() => handleThumbnailClick(image)}
+                    />
+                  ))
+                : ""}
             </div>
           </div>
 
           <div className="col-md-6">
             <h1>{product.name}</h1>
             <ul className="list-unstyled">
-              <li>100% Полиестер</li>
-              <li>145гр./м2</li>
               <li>Произведено в България</li>
             </ul>
             <p className="text-danger h4">от {product.price} лв.</p>
 
             <form onSubmit={handleBuyClick}>
+            {product.category === "Облекло" && (
+        <>
               <div className="mb-3">
                 <label htmlFor="size" className="form-label">
                   РАЗМЕР:
@@ -265,8 +276,12 @@ const Detail = () => {
                 <label htmlFor="print-front" className="form-label">
                   ОТПРЕД – ПРИНТ:
                 </label>
-                <select id="print-front" className="form-select" value={printFront}
-          onChange={handlePrintFrontChange}>
+                <select
+                  id="print-front"
+                  className="form-select"
+                  value={printFront}
+                  onChange={handlePrintFrontChange}
+                >
                   <option value="">Избери</option>
                   <option value="center-large">
                     Център голям- 40/28см - 10,00 лв
@@ -290,8 +305,12 @@ const Detail = () => {
                 <label htmlFor="print-back" className="form-label">
                   ГРЪБ – ПРИНТ:
                 </label>
-                <select id="print-back" className="form-select" value={printBack}
-          onChange={handlePrintBackChange}>
+                <select
+                  id="print-back"
+                  className="form-select"
+                  value={printBack}
+                  onChange={handlePrintBackChange}
+                >
                   <option value="">Избери</option>
                   <option value="center-large">
                     Център голям- 40/28см - 10,00 лв
@@ -310,14 +329,24 @@ const Detail = () => {
                 <label htmlFor="upload-front" className="form-label">
                   Прикачи файл за принт – Отпред:
                 </label>
-                <input type="file" id="upload-front" className="form-control" onChange={handleUploadFrontChange} />
+                <input
+                  type="file"
+                  id="upload-front"
+                  className="form-control"
+                  onChange={handleUploadFrontChange}
+                />
               </div>
-
+              </>
+      )}
               <div className="mb-3">
                 <label htmlFor="upload-back" className="form-label">
-                  Прикачи файл за принт – Гръб:
+                 {product.category== "Облекло"?"Прикачи файл за принт – Гръб:" : "Прикачи файл:"} 
                 </label>
-                <input type="file" id="upload-back" className="form-control" onChange={handleUploadBackChange}
+                <input
+                  type="file"
+                  id="upload-back"
+                  className="form-control"
+                  onChange={handleUploadBackChange}
                 />
               </div>
 
