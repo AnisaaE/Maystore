@@ -16,6 +16,7 @@ router.post('/register', userController.register);
 router.post('/econt/validate', orderController.validateOrder);
 router.post('/econt/create', orderController.createOrder);
 router.post('/econt/getCities', orderController.getCitiesController);
+router.post('/econt/getOffices/:id', orderController.getOfficesController);
 
 
 module.exports = router

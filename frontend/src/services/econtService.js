@@ -16,7 +16,18 @@ export const econtServiceBuilder = () => {
       }
   };
 
+  const getOffices = async (id) => {
+    try {
+        const response = await request.post(`${baseUrl}/getOffices/${id}`);
+        console.log(response);
+        return response; 
+      } catch (error) {
+        console.error("Error fetching offices:", error);
+        throw error;
+      }
+  };
+
   return {
-   getCities
+   getCities, getOffices
   };
 };

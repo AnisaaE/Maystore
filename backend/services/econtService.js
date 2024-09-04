@@ -7,17 +7,13 @@ let fetch;
   fetch = (await import("node-fetch")).default;
 })();
 
-//const API_URL = process.env.API_URL;
-const API_URL = "https://demo.econt.com/ee/services/"; // Новият URL
-
+const API_URL = process.env.API_URL;
 const API_USERNAME = process.env.API_USERNAME;
 const API_PASSWORD = process.env.API_PASSWORD;
 
-const gunzip = promisify(zlib.gunzip);
-
 const request = async (endpoint, method, body) => {
   try {
-      console.log('Requesting from Econt API...');
+      console.log('Requesting from Econt API...' + endpoint);
   
     const response = await fetch(`${API_URL}${endpoint}`, {
       method: method,
@@ -28,11 +24,8 @@ const request = async (endpoint, method, body) => {
       body: JSON.stringify(body),
     });
 
-  
     const responseText = await response.text();
-    console.log('Status:', response.status);
-    console.log('Response Text:', responseText);
-
+  
     if (!responseText) {
       throw new Error('Empty response from API');
     }
@@ -53,23 +46,36 @@ const request = async (endpoint, method, body) => {
 };
 
 
-
 const getCities = async () => {
   try {
-    console.log("Requesting cities from Econt API...");
-    // Използвай правилния endpoint, предоставен от съпорта
     const response = await request(
       "Nomenclatures/NomenclaturesService.getCities.json",
       "POST",
       {
-        countryCode: "BGR", // код на страната
+        countryCode: "BGR",
       }
     );
-    console.log("Response from Econt API:", response); // Логиране на отговора
     return response;
   } catch (error) {
     console.error("Error fetching cities:", error);
     throw new Error(`Error fetching cities: ${error.message}`);
+  }
+};
+
+const getOffices = async (cityId) => {
+  try {
+    const response = await request(
+      "Nomenclatures/NomenclaturesService.getOffices.json",
+      "POST",
+      {
+        countryCode: "BGR",
+        cityId: cityId,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching offices:", error);
+    throw new Error(`Error fetching offices: ${error.message}`);
   }
 };
 const createShippingLabel = async (labelData) => {
@@ -123,4 +129,5 @@ module.exports = {
   validateShippingLabel,
   calculateShippingCost,
   getCities,
+  getOffices,
 };
