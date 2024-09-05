@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { econtServiceBuilder } from "../../services/econtService";
+import { useNavigate } from 'react-router-dom';
 
-const CheckoutComponent = () => {
+const CheckoutComponent = ({ products, totalPrice }) => {
+  const navigate = useNavigate();
   const econtService = econtServiceBuilder();
   const [sender, setSender] = useState({
     name: "",
     phone: "",
-    address: "",
+    email: "",
   });
 
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(""); 
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [filteredCities, setFilteredCities] = useState(cities); 
+  const [selectedCity, setSelectedCity] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCities, setFilteredCities] = useState(cities);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [offices, setOffices]= useState("");
-  const [searchOffice, setSearchOffice]= useState('')
-  const [filteredOffices, setFilteredOffices] = useState(offices); 
-const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
-
-  const [deliveryCost, setDeliveryCost] = useState(0);
+  const [offices, setOffices] = useState("");
+  const [searchOffice, setSearchOffice] = useState("");
+  const [filteredOffices, setFilteredOffices] = useState(offices);
+  const [showSuggestionOffices, setShowSuggestionOffices] = useState(false);
+  const [selectedOffice, setSelectedOffice] = useState({});
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -58,42 +59,64 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
       );
     }
   }, [searchOffice, offices]);
-  const handleCitySelect = async (cityName, id) => {
-    setSearchTerm(cityName);
+  const handleCitySelect = async (city) => {
+    setSelectedCity(city);
+    setSearchTerm(city.name);
     setShowSuggestions(false);
 
     try {
-      const data2 = await econtService.getOffices(id);
+      const data2 = await econtService.getOffices(city.id);
       setOffices(data2.offices);
     } catch (error) {
       console.error("Error fetching offices:", error);
     }
-
-
   };
-  
-  const handleOfficeSelect = (officeName) => {
-    setSearchOffice(officeName);
+
+  const handleOfficeSelect = (office) => {
+    setSearchOffice(office.name);
+    setSelectedOffice(office);
     setShowSuggestionOffices(false);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here, you would handle the final checkout logic, including creating the shipment label
-    console.log("Checkout data:", {
-      sender,
-      // receiver,
-
-      selectedCity,
-    });
+    const orderInfo = {
+      name: sender.name,
+      phone: sender.phone,
+      email: sender.email,
+      office: {
+        id: selectedOffice.id,
+        city: {
+          country: {
+            code3: selectedOffice.address.city.country.code3,
+          },
+          name: selectedOffice.address.city.name,
+          postCode: selectedOffice.address.city.postCode,
+        },
+        fullAddress: selectedOffice.address.fullAddress,
+        quarter: selectedOffice.address.quarter,
+        name: selectedOffice.name,
+        street: selectedOffice.address.street,
+      },
+      products,
+      totalPrice,
+    };
+    console.log(orderInfo);
+    try {
+      await econtService.sendOrder(orderInfo);
+ navigate("/acceptedOrder");
+    } catch (error) {
+      alert("Error fetching:" +{error});
+    }
+   
   };
 
   return (
-    <div className="container my-5 ">
+    <div className="container my-5">
       <form
         onSubmit={handleSubmit}
         className="checkout-form bg-light p-4 rounded shadow row gap-3 justify-content-center"
       >
-        <h2 className="text-center mb-4">Checkout</h2>
+        <h2 className="text-center mb-4">Информация за доставка</h2>
 
         {/* Sender Information */}
         <div className="form-group mb-4 col-md-6 row pe-3 justify-content-center">
@@ -130,44 +153,13 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
             <input
               type="text"
               className="form-control"
-              placeholder="имейл адрес"
-              value={sender.address}
-              onChange={(e) =>
-                setSender({ ...sender, address: e.target.value })
-              }
+              placeholder="e-mail"
+              value={sender.email}
+              onChange={(e) => setSender({ ...sender, email: e.target.value })}
               required
             />
           </div>
         </div>
-
-        {/* Receiver Information
-        <div className="form-group mb-4">
-          <h3>Receiver Information</h3>
-          <input
-            type="text"
-            className="form-control mb-2"
-            placeholder="Receiver Name"
-            value={receiver.name}
-            onChange={(e) => setReceiver({ ...receiver, name: e.target.value })}
-            required
-          />
-          <input
-            type="tel"
-            className="form-control mb-2"
-            placeholder="Receiver Phone"
-            value={receiver.phone}
-            onChange={(e) => setReceiver({ ...receiver, phone: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Receiver Address"
-            value={receiver.address}
-            onChange={(e) => setReceiver({ ...receiver, address: e.target.value })}
-            required
-          />
-        </div> */}
 
         <div className="form-group mb-4  col-md-6 row">
           <div className="col-12">
@@ -177,7 +169,7 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
             <input
               type="text"
               value={searchTerm}
-               className="form-control mb-2"
+              className="form-control mb-2"
               onChange={(e) => {
                 setSearchTerm(e.target.value);
                 setShowSuggestions(true);
@@ -201,7 +193,7 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
                 {filteredCities.map((city) => (
                   <li
                     key={city.id}
-                    onClick={() => handleCitySelect(city.name, city.id)}
+                    onClick={() => handleCitySelect(city)}
                     style={{
                       padding: "8px",
                       cursor: "pointer",
@@ -222,7 +214,7 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
             <input
               type="text"
               value={searchOffice}
-               className="form-control mb-2"
+              className="form-control mb-2"
               onChange={(e) => {
                 setSearchOffice(e.target.value);
                 setShowSuggestionOffices(true);
@@ -246,13 +238,13 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
                 {filteredOffices.map((office) => (
                   <li
                     key={office.id}
-                    onClick={() => handleOfficeSelect(office.name)}
+                    onClick={() => handleOfficeSelect(office)}
                     style={{
                       padding: "8px",
                       cursor: "pointer",
                       backgroundColor: "#fff",
                     }}
-                    onMouseDown={(e) => e.preventDefault()} 
+                    onMouseDown={(e) => e.preventDefault()}
                   >
                     {office.name}
                   </li>
@@ -262,16 +254,12 @@ const [showSuggestionOffices, setShowSuggestionOffices]= useState(false)
           </div>
         </div>
 
-        {/* Display Delivery Cost */}
-        <div className="form-group mb-4">
-          <h3>Delivery Cost</h3>
-          <p className="alert alert-info">
-            {deliveryCost ? `${deliveryCost} BGN` : "Calculating..."}
-          </p>
-        </div>
-
-        <button type="submit" className="btn btn-success w-70">
-          Complete Checkout
+        <button
+          type="submit"
+          className="btn btn-success"
+          style={{ width: "35%" }}
+        >
+          Завърши поръчката
         </button>
       </form>
     </div>

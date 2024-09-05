@@ -12,6 +12,7 @@ import ProductCatalog from "./components/Catalog/Catalog";
 import Detail from "./components/Detail/Detail";
 import ShoppingCart from "./components/ShoppingCard/ShoppingCard";
 import CheckoutComponent from "./components/Check-out/checkOut";
+import AcceptedOrder from "./components/AcceptedOrder/AcceptedOrder";
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,8 @@ function App() {
               <Route path="/cart" element={<ShoppingCart />} />
               <Route path="/product/:productId" element={<Detail />} />
               <Route path="/checkout" element={<CheckoutComponent />} />
+              <Route path="/acceptedOrder" element={<AcceptedOrder />} />
+
             </Routes>
           </ProductProvider>
         </CartProvider>

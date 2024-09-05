@@ -27,7 +27,7 @@ const AddProduct = () => {
     Подаръци: ['Химикали', 'Чаши', 'Ключодържатели', 'Чанти', 'Тефтери'],
   };
 
-  // Handle form input changes
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -38,7 +38,6 @@ const AddProduct = () => {
     }
   };
 
-  // Handle file input change
   const handleFileChange = (index, event) => {
     const files = [...images];
     files[index] = event.target.files[0];

@@ -27,7 +27,18 @@ export const econtServiceBuilder = () => {
       }
   };
 
+  const sendOrder = async (data) => {
+    try {
+        const response = await request.post(`${baseUrl}/sendOrder`, data);
+        console.log(response);
+        return response; 
+      } catch (error) {
+        console.error("Error sending order:", error);
+        throw error;
+      }
+  };
+
   return {
-   getCities, getOffices
+   getCities, getOffices, sendOrder
   };
 };

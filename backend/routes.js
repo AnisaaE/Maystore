@@ -17,6 +17,12 @@ router.post('/econt/validate', orderController.validateOrder);
 router.post('/econt/create', orderController.createOrder);
 router.post('/econt/getCities', orderController.getCitiesController);
 router.post('/econt/getOffices/:id', orderController.getOfficesController);
+router.post('/econt/sendOrder', orderController.sendOrder);
 
+router.get('/orders', orderController.getAllOrders);
+router.get('/orders/:id', orderController.getOrderById);
+router.post('/orders/:id/createLabel', orderController.createLabel);
+router.delete('/orders/:id/deleteLabel', orderController.deleteLabel);
+router.delete('/orders/:id', orderController.deleteOrder);
 
 module.exports = router

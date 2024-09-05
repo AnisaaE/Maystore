@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/cardContext";
 import { useEffect, useState } from "react";
+import CheckoutComponent from "../Check-out/checkOut";
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
@@ -42,9 +43,10 @@ const ShoppingCart = () => {
   };
 
   return (
+    <>
     <div
       className="container my-5 p-4 bg-light rounded"
-      style={{ minHeight: "100vh" }}
+      
     >
       <h2 className="text-center mb-4">Вашата количка</h2>
       {cartItems.length === 0 ? (
@@ -105,9 +107,12 @@ const ShoppingCart = () => {
               </li>
             ))}
           </ul>
-          <h4 className=" mb-4 text-end">
+          <div className="d-flex flex-column justify-content-center align-items-end">
+          <h4 className="mb-1 text-end">
             Крайна сума: {totalPrice.toFixed(2)} лв.
           </h4>
+          <p style={{ paddingRight: "9em" }}>*Без доставка</p>
+          </div>
           <div className="d-flex justify-content-between align-items-baseline">
             <button
               className="btn btn-outline-danger"
@@ -115,14 +120,13 @@ const ShoppingCart = () => {
             >
               Изчисти количката
             </button>
-            <Link to="/checkout" className="btn btn-success">
-              Към поръчката
-            </Link>
           </div>
           {/* Display the total price below the cart items */}
         </>
       )}
     </div>
+    {cartItems.length >0 ?<CheckoutComponent products={cartItems} totalPrice={totalPrice}/>: ""}
+    </>
   );
 };
 

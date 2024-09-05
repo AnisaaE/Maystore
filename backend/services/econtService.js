@@ -74,7 +74,6 @@ const getOffices = async (cityId) => {
     );
     return response;
   } catch (error) {
-    console.error("Error fetching offices:", error);
     throw new Error(`Error fetching offices: ${error.message}`);
   }
 };
