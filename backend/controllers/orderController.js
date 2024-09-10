@@ -35,7 +35,7 @@ const getOfficesController = async (req, res) => {
   try {
     const { id } = req.params;
     const offices = await getOffices(id);
-    console.log(offices);
+    
     res.json(offices);
   } catch (error) {
     console.error('Error in getOfficesController:', error);
@@ -98,17 +98,14 @@ const getOrderById = async (req, res) => {
   }
 };
 
-// Create label for an order
 const createLabel = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json({ message: 'Order not found' });
-
-    // Add logic to create a label
-    order.label = 'New Label'; // Example; customize as needed
-    await order.save();
-
-    res.json({ message: 'Label created successfully', order });
+    const moreInfo = req.body;
+    const result = await createShippingLabel(order, moreInfo);
+    console.log(result)
+      res.json(result);
   } catch (error) {
     res.status(500).json({ message: 'Error creating label', error: error.message });
   }

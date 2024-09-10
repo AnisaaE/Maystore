@@ -1,6 +1,4 @@
 require("dotenv").config();
-const zlib = require("zlib");
-const { promisify } = require('util');
 
 let fetch;
 (async () => {
@@ -77,37 +75,49 @@ const getOffices = async (cityId) => {
     throw new Error(`Error fetching offices: ${error.message}`);
   }
 };
-const createShippingLabel = async (labelData) => {
+const createShippingLabel = async (labelData, moreInfo) => {
+  // Създаване на тялото на заявката с необходимите параметри
   const requestBody = {
     label: {
-      senderClient: labelData.senderClient,
-      senderAddress: labelData.senderAddress,
-      receiverClient: labelData.receiverClient,
-      receiverAddress: labelData.receiverAddress,
-      requestCourierTimeFrom: labelData.requestCourierTimeFrom,
-      requestCourierTimeTo: labelData.requestCourierTimeTo,
-      packCount: labelData.packCount,
-      shipmentType: labelData.shipmentType,
-      weight: labelData.weight,
-      shipmentDescription: labelData.shipmentDescription,
-      returnInstruction: labelData.returnInstruction,
-      instructions: labelData.instructions,
-      services: labelData.services,
-      packingList: labelData.packingList,
-      partialDelivery: labelData.partialDelivery,
-      paymentSenderMethod: labelData.paymentSenderMethod,
-      paymentReceiverMethod: labelData.paymentReceiverMethod,
-      paymentReceiverAmount: labelData.paymentReceiverAmount,
-      paymentReceiverAmountIsPercent: labelData.paymentReceiverAmountIsPercent,
-      paymentOtherClientNumber: labelData.paymentOtherClientNumber,
-      paymentOtherAmount: labelData.paymentOtherAmount,
-      paymentOtherAmountIsPercent: labelData.paymentOtherAmountIsPercent,
-      mediator: labelData.mediator,
+      senderClient: {
+        name: "Селви Гаджалов",
+        phones: ["0877707018"],
+      },
+      senderAddress: {
+        id: 65,
+        city: {
+          country: {
+            code3: "BGR",
+          },
+          name: "Рудозем",
+          postCode: "4960",
+        },
+        street: "бул. България",
+      },
+      senderOfficeCode: "4960",
+      receiverClient: {
+        name: labelData.name,
+        phones: [labelData.phone],
+        email: labelData.email,
+      },
+      receiverAddress: labelData.office,
+      receiverOfficeCode: labelData.office.code,
+      packCount: 1,
+      shipmentType: "PACK",
+      weight: moreInfo.weight,
+      shipmentDescription: moreInfo.description,
+      payAfterAccept: 1,
+      paymentReceiverMethod: "CASH",
+      sendDate: new Date().toISOString().slice(0, 10),
     },
-    mode: "create", // или 'validate' за валидиране
+    mode: "validate", 
   };
-
-  return request("createLabel", "POST", requestBody);
+  
+  return request(
+    "Shipments/LabelService.createLabel.json", 
+    "POST",
+    requestBody
+  );
 };
 
 const validateShippingLabel = async (labelData) => {

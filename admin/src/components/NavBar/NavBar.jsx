@@ -9,9 +9,6 @@ const NavBar = () => {
   
           <img src={navlogo} alt="Maystore Logo" className="nav-logo"/>
         
-        <div className="d-flex align-items-center">
-          <img src={navprofile} alt="User Profile" className="nav-profile" />
-        </div>
       </div>
     </nav>
   );

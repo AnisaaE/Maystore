@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContex";
 import "./style.css";
 import { useCart } from "../../context/cardContext";
 
 function NavigationBar() {
+  const { user, onLogout , isAuth} = useContext(AuthContext);
   const { cartItems } = useCart();
 
   return (
@@ -224,13 +227,13 @@ function NavigationBar() {
               </li>
               <li>
                 <Link className="nav-link ms-2" to="/stickers">
-                  Бизнес клиенти
+                  Промо пакети
                 </Link>
               </li>
             </ul>
           </div>
-          <Link to="/login" className="cart-icon">
-          <i class="bi bi-person-circle" style={{ fontSize: "1.5rem", color: "white" }}></i>
+          <Link to="/favorites" className="cart-icon">
+          <i className="bi bi-suit-heart-fill" style={{ fontSize: "1.5rem", color: "white" }}></i>
           </Link>
           <Link to="/cart" className="cart-icon">
             <i
@@ -241,6 +244,11 @@ function NavigationBar() {
               <span className="cart-count">{cartItems.length}</span>
             )}
           </Link>
+          {!isAuth? <Link to="/register" className="cart-icon">
+          <i class="bi bi-person-circle" style={{ fontSize: "1.5rem", color: "white" }}></i>
+          </Link>: <button onClick={onLogout} className="cart-icon btn">
+    <i className="bi bi-box-arrow-right" style={{ fontSize: "1.5rem", color: "white" }}></i>
+  </button>} 
           {" "}
         </div>
       </nav>

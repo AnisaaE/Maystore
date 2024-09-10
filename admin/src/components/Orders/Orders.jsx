@@ -4,6 +4,10 @@ const AdminPanel = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [moreInfo, setMoreinfo] = useState({
+    weight: 0,
+    description: '',
+  });
 const API_URL = 'http://localhost:4000';
  
 useEffect(() => {
@@ -42,6 +46,10 @@ useEffect(() => {
   const handleCreateLabel = (orderId) => {
     fetch(`${API_URL}/orders/${orderId}/createLabel`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(moreInfo),
     })
       .then(response => {
         if (!response.ok) {
@@ -54,7 +62,13 @@ useEffect(() => {
       })
       .catch(error => console.error('Error creating label:', error));
   };
-
+const handleMoreInfo = (e) => {
+  e.preventDefault();
+  setMoreinfo({
+    ...moreInfo,
+    [e.target.name]: e.target.value
+  });
+}
   const handleDeleteLabel = (orderId) => {
     fetch(`${API_URL}/orders/${orderId}/deleteLabel`, {
       method: 'DELETE',
@@ -104,7 +118,7 @@ useEffect(() => {
     <h2 className="text-center mb-4">Orders List</h2>
 
     <div className="row">
-      <div className="col-12">
+      <div className="col-md-4">
         <div className="list-group">
           {orders.map(order => (
             <button
@@ -126,18 +140,53 @@ useEffect(() => {
               <h4>Order Details</h4>
             </div>
             <div className="card-body">
+            <p><strong>Status:</strong> {selectedOrder.status}</p>
               <p><strong>Name:</strong> {selectedOrder.name}</p>
               <p><strong>Phone:</strong> {selectedOrder.phone}</p>
               <p><strong>Email:</strong> {selectedOrder.email}</p>
-              <p><strong>Total Price:</strong> {selectedOrder.totalPrice.toFixed(2)} USD</p>
-
+              <p><strong>Total Price:</strong> {selectedOrder.totalPrice.toFixed(2)} лв</p>
+              <div className="col-md-6">
+              <label htmlFor="name" className="form-label fw-semibold">
+                Weight
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-sm"
+                id="weight"
+                name="weight"
+                value={moreInfo.weight}
+                onChange={handleMoreInfo}
+                placeholder="Тегло"
+                required
+              />
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="name" className="form-label fw-semibold">
+                Description:
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-sm"
+                id="description"
+                name="description"
+                value={moreInfo.description}
+                onChange={handleMoreInfo}
+                placeholder="Description"
+                required
+              />
+            </div>
               <h5 className="mt-4">Products</h5>
               <ul className="list-group mb-3">
                 {selectedOrder.products.map(product => (
                   <li key={product._id} className="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                       <p className="mb-1">{product.name}</p>
-                      <p className="text-muted mb-1">{product.price.toFixed(2)} USD</p>
+                      <p className="text-muted mb-1">{product.price.toFixed(2)} лв</p>
+                      <p className="text-muted mb-1">Quantity: {product.quantity}</p>
+                      <p className="text-muted mb-1">Color: {product.color}</p>
+                      <p className="text-muted mb-1">Size: {product.size}</p>
+                      <p className="text-muted mb-1">Print Front: {product.printFront}</p>
+                      <p className="text-muted mb-1">Print Back: {product.printBack}</p>
                     </div>
                     <div>
                       {product.uploadFront && (

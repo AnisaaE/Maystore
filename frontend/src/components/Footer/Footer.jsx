@@ -25,7 +25,6 @@ export function Footer() {
         </div>
       </section>
 
-    
       <section>
         <div className="container text-center text-md-start mt-5">
           <div className="row mt-3">
@@ -40,7 +39,7 @@ export function Footer() {
                 }}
               />
               <p>
-                Стилни решения с диззай по ваш избор. Персонализация на най-високо ниво – идеално за бизнеси, събития и подаръци.
+                Стилни решения с дизай по ваш избор. Персонализация на най-високо ниво – идеално за бизнеси, събития и подаръци.
               </p>
             </div>
             {/* Grid column */}

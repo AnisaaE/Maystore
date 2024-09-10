@@ -1,31 +1,61 @@
-import React, { createContext, useContext, useState } from "react";
-
+import React, { createContext, useContext, useEffect } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { AuthContext } from "./authContex";
+import { authServiceBuilder } from "../services/usersService";
 
 const CartContext = createContext();
-
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
+  const { isAuth, cartList } = useContext(AuthContext); // Getting cart list from AuthContext
+  const authService = authServiceBuilder();
 
-  const addToCart = (product) => {
+  // Sync cart items with AuthContext when authenticated
+  useEffect(() => {
+    if (isAuth && cartList.length > 0) {
+      setCartItems(cartList); // Set cart items from authenticated user's data
+    }
+  }, [isAuth, cartList, setCartItems]);
+
+  const addToCart = async (product) => {
+    console.log("продукт"+ product);
+    console.log("предмети в количката"+cartItems)
     setCartItems((prevItems) => [...prevItems, product]);
+    if (isAuth) {
+      const response = await authService.updateCart([...cartItems, product]);
+      if (!response.ok) {
+        const errorData = await response.json();
+        return errorData.message || "Adding product to cart on server failed";
+      }
+    }
   };
 
-  const removeFromCart = (uniqueKey) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.uniqueKey !== uniqueKey)
-    );
+  const removeFromCart = async (uniqueKey) => {
+    const updatedCart = cartItems.filter((item) => item.uniqueKey !== uniqueKey);
+    setCartItems(updatedCart);
+    if (isAuth) {
+      const response = await authService.updateCart(updatedCart);
+      if (!response.ok) {
+        const errorData = await response.json();
+        return errorData.message || "Removing product from cart on server failed";
+      }
+    }
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
     setCartItems([]);
+    if (isAuth) {
+      const response = await authService.updateCart([]);
+      if (!response.ok) {
+        const errorData = await response.json();
+        return errorData.message || "Clearing cart on server failed";
+      }
+    }
   };
 
   return (
-    <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
-    >
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );

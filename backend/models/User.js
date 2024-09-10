@@ -1,32 +1,23 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const bcrypt = require('bcryptjs');
 
-// Създаваме схема за потребител
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'user' }, 
+  isVerified: { type: Boolean, default: false },
+  verificationCode: { type: String, default: 'default_code' },
+  favourites: { type: Object, default: [] }, // Array of items for favourites
+  cartList: { type: Object, default: [] },
 });
 
-// Създаваме модел от схемата
-const User = mongoose.model('User', userSchema);
+// Hash the password before saving
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
 
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

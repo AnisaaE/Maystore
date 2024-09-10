@@ -66,7 +66,11 @@ const CheckoutComponent = ({ products, totalPrice }) => {
 
     try {
       const data2 = await econtService.getOffices(city.id);
-      setOffices(data2.offices);
+      // Филтрираме офисите, като проверяваме дали city.name в адреса съвпада с избрания град
+      const filteredOffices = data2.offices.filter(
+        office => office.address.city.name === city.name
+      );
+      setOffices(filteredOffices);
     } catch (error) {
       console.error("Error fetching offices:", error);
     }
@@ -85,6 +89,7 @@ const CheckoutComponent = ({ products, totalPrice }) => {
       email: sender.email,
       office: {
         id: selectedOffice.id,
+        code: selectedOffice.code,
         city: {
           country: {
             code3: selectedOffice.address.city.country.code3,

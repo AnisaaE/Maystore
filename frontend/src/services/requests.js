@@ -20,7 +20,7 @@ const requester = async (method, url, data) => {
         if (auth.accessToken) {
             options.headers = {
                 ...options.headers,
-                'X-Authorization': auth.accessToken,
+                'X-Authorization': `Bearer ${auth.accessToken}`,
             };
         }
     }

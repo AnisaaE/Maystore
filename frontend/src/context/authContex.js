@@ -1,45 +1,48 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { authServiceBuilder } from "../services/userService";
-import { registerValidation } from "../validations/validations";
+import { authServiceBuilder } from "../services/usersService";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const authService = authServiceBuilder();
   const [auth, setAuth] = useLocalStorage("auth", {});
   const navigate = useNavigate();
-  const authService = authServiceBuilder(auth.accessToken);
 
   const onSubmitRegister = async (data) => {
-    const validationData = registerValidation(data);
-
-    if (Array.isArray(validationData)) {
-      return validationData;
-    } else {
-      try {
-        const result = await authService.register(validationData);
-        setAuth(result);
-        navigate("/");
-      } catch (error) {
-        return ["There is a problem... Please, try again later!"];
-      }
+    try {
+      
+      const result = await authService.register(data);
+  
+      // Запазваме данните за автентикация, ако всичко е наред
+      setAuth(result);
+    } catch (error) {
+      console.log(error);
+      throw new Error(error.message);
     }
   };
 
   const onSubmitLogin = async (data) => {
     try {
-      let result = await authService.login(data);
-
-      setAuth(result);
+      let response = await authService.login(data);
+      console.log(response);
+      setAuth(response);
       navigate("/");
     } catch (err) {
-      return ["Incorrect email or password!"];
+      throw new Error("Incorrect email or password!");
     }
   };
-
+  const verifyEmail = async (data) => {
+    try {
+      const response = await authService.verifyEmail(data);
+      console.log("verifyEmail", JSON.stringify(response));
+    } catch (error) {
+      throw new Error("There is a problem... Please, try again later!");
+    }
+  };
   const onLogout = async () => {
-    await authService.logout();
+    console.log("logout");
     setAuth({});
     localStorage.clear();
   };
@@ -47,12 +50,12 @@ export function AuthProvider({ children }) {
   const context = {
     onSubmitRegister,
     onSubmitLogin,
+    verifyEmail,
     onLogout,
     auth,
+    cartList: auth.cartList,
     token: auth.accessToken,
-    userId: auth._id,
-    email: auth.email,
-    userUsername: auth.username,
+    favourites: auth.fav,
     isAuth: !!auth.accessToken,
   };
 

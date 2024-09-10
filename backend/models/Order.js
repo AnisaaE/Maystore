@@ -7,6 +7,10 @@ const officeSchema = new Schema({
     type: Number,
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+  },
   city: {
     country: {
       code3: {
@@ -45,7 +49,53 @@ const officeSchema = new Schema({
   },
 });
 
-
+const OrderedProductSchema = new Schema({
+  uniqueKey: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  size: {
+    type: String,
+    default: '',
+  },
+  color: {
+    type: String,
+    default: '',
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  printFront: {
+    type: String,
+    default: '',
+  },
+  printBack: {
+    type: String,
+    default: '',
+  },
+  uploadFront: {
+    type: String, // Може да е `String` или `Buffer` в зависимост от начина, по който се съхраняват изображенията
+    default: null,
+  },
+  uploadBack: {
+    type: String, // Може да е `String` или `Buffer` в зависимост от начина, по който се съхраняват изображенията
+    default: null,
+  }
+  
+});
 const orderSchema = new Schema(
   {
     id: {
@@ -72,8 +122,8 @@ const orderSchema = new Schema(
       required: true,
     },
     products: {
-      type: Object,
-      requred:true,
+      type: [OrderedProductSchema],
+      required: true,
     },
     totalPrice: {
       type: Number,

@@ -3,6 +3,7 @@ body {
 }
 
 .bg-custom-purple {
+  background-color: rgba(101, 6, 165, 0.128);
   background-color: #6606a5;
   box-shadow: 6px 29px 11px -11px rgba(0, 0, 0, 0.4);
   border: none;
