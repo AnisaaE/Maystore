@@ -73,7 +73,6 @@ const register = async (req, res) => {
   }
 };
 
-
 const verifyEmail = async (req, res) => {
   const { email, verificationCode } = req.body;
 console.log(email, verificationCode)
@@ -147,6 +146,23 @@ const promote = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 }
+const revoke = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.role === 'superuser') {
+      return res.status(400).json({ message: 'Cannot revoke superuser rights' });
+    }
+
+    user.role = 'user';
+    await user.save();
+    res.json({ message: 'User rights revoked' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
 const updateCart = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -177,6 +193,7 @@ module.exports = {
   getUsers,
   promote,
   register,
+  revoke,
   verifyEmail,
   updateCart,
   updateFavourites

@@ -45,6 +45,7 @@ router.post('/users/updateFavorites', userController.updateFavourites);
 
 router.get('/me',  userController.getCurrentUser);
 router.get('/users', isSuperuser, userController.getUsers);
+router.post('/users/:userId/revoke', isSuperuser, userController.revoke);
 router.post('/users/:userId/promote', isSuperuser, userController.promote);
 
 module.exports = router
