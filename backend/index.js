@@ -7,7 +7,12 @@ const path = require("path");
 const routes = require("./routes");
 const authenticateToken = require('./middlewares/authMiddleware');
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  allowedHeaders: ['Content-Type', 'X-Authorization'],
+  exposedHeaders: ['X-Authorization'],
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(authenticateToken)

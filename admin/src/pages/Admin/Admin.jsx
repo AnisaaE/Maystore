@@ -7,7 +7,7 @@ import AddProduct from '../../components/AddProduct/AddProduct'
 import Orders from '../../components/Orders/Orders'
 import AdminUserList from '../../components/UserList/UserList'
 
-const Admin = () => {
+const Admin = ({user}) => {
   return (
     <div className="admin">
       <Sidebar />
@@ -17,7 +17,7 @@ const Admin = () => {
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/products" element={<ListProduct />} />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/users" element ={<AdminUserList />} />
+        <Route path="/users" element ={<AdminUserList user={user} />} />
       </Routes>
     </div>
   )

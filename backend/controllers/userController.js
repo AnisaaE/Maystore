@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Проверка дали транспортерът е конфигуриран правилно
 transporter.verify((error, success) => {
   if (error) {
     console.error('Транспортерът не е конфигуриран правилно:', error);
@@ -94,7 +93,6 @@ console.log(email, verificationCode)
     res.status(400).json({ error: error.message });
   }
 };
-
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -108,7 +106,7 @@ const login = async (req, res) => {
 console.log(isMatch)
     if (!isMatch) {
       console.log(password + " " + user.password)
-      return res.status(400).json({ message: 'Invalid credentials or account not verified.' });
+      return res.status(400).json({ message: 'Invalid credentials.' });
     }
 console.log("user",user)
     const accessToken = jwt.sign({ _id: user._id, username: user.username, role: user.role, favourites: user.favourites, cartList: user.cartList, email: user.email }, process.env.SECRET_KEY);
@@ -118,7 +116,6 @@ console.log("user",user)
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 const getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

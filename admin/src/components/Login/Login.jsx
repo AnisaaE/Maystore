@@ -19,16 +19,20 @@ const Login = ({ setUser }) => {
           },
           body: JSON.stringify({ username, password }),
         });
-  
+  if(response.status != 200){
+    console.log("Статуса е грешен в  логин комп")
+    throw new Error(response.message);
+  }
         const data = await response.json();
         console.log("data",data)
         if(data.role == 'user'){
          throw new Error('Login failed');
         } 
         setUser(data); 
+        console.log(data)
         navigate('/');
       } catch (error) {
-        setError('Login failed: ' + error.message);
+        setError('Login failed: ' + error);
       }
     };
   

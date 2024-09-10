@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-const AdminUserList = () => {
+const AdminUserList = ({user}) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        console.log(user)
         const response = await fetch('http://localhost:4000/users', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
+            'X-Authorization': `Bearer ${user.accessToken}`, // Увери се, че accessToken е зададен коректно
           },
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch users');
-        }
-
         const data = await response.json();
+        console.log("",data);
         setUsers(data);
       } catch (error) {
         console.error('Error fetching users:', error);

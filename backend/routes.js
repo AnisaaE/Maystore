@@ -6,11 +6,17 @@ const orderController = require('./controllers/orderController');
 const upload = require('./config/multerConfig');
 
 const isSuperuser = (req, res, next) => {
-    if (req.user.role !== 'superuser') {
-      return res.status(403).json({ message: 'Access denied' });
-    }
-    next();
-  };
+  console.log('User:', req.user); // Проверка на съдържанието на req.user
+  if (!req.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  if (req.user.role !== 'superuser') {
+    return res.status(403).json({ message: 'Access denied' });
+  }
+
+  next();
+};
 
 router.post('/upload', upload.single('product'), productController.uploadImage);
 
