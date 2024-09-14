@@ -32,7 +32,7 @@ function ProductCard({ product }) {
             <h5 className="card-title text-dark">{product.name}</h5>
             <div className="separator"></div>
             <p className="card-text text-primary">
-              Цена: {product.price} лв.
+              Цена: от {product.price} лв.
             </p>
           </div>
           <button

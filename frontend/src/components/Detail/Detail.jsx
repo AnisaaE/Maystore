@@ -77,8 +77,32 @@ const Detail = () => {
   const finalPrice = calculateFinalPrice();
 
   const handleBuyClick = (e) => {
-    const uniqueKey = uuidv4();
     e.preventDefault();
+    
+    if (!selectedSize) {
+      enqueueSnackbar("Моля, изберете размер!", { variant: "error" });
+      return;
+    }
+
+    if (!selectedColor) {
+      enqueueSnackbar("Моля, изберете цвят!", { variant: "error" });
+      return;
+    }
+    
+    if (printFront && !uploadFront) {
+      enqueueSnackbar("Моля, прикачете файл за принт отпред!", {
+        variant: "error",
+      });
+      return;
+    }
+    
+    if (printBack && !uploadBack) {
+      enqueueSnackbar("Моля, прикачете файл за принт отзад!", {
+        variant: "error",
+      });
+      return;
+    }
+    const uniqueKey = uuidv4();
     const productToAdd = {
       uniqueKey,
       name: product.name,

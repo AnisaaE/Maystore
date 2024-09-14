@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useSnackbar } from "notistack";
 import { econtServiceBuilder } from "../../services/econtService";
-import { useNavigate } from 'react-router-dom';
+import {
+  validateEmail,
+  validatePhoneNumber,
+  validateName,
+  validateCity,
+  validateOffice,
+} from "../../utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutComponent = ({ products, totalPrice }) => {
   const navigate = useNavigate();
   const econtService = econtServiceBuilder();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [sender, setSender] = useState({
     name: "",
+    surname: "",
     phone: "",
     email: "",
   });
@@ -17,19 +28,24 @@ const CheckoutComponent = ({ products, totalPrice }) => {
   const [filteredCities, setFilteredCities] = useState(cities);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [offices, setOffices] = useState("");
+  const [offices, setOffices] = useState([]);
   const [searchOffice, setSearchOffice] = useState("");
   const [filteredOffices, setFilteredOffices] = useState(offices);
   const [showSuggestionOffices, setShowSuggestionOffices] = useState(false);
   const [selectedOffice, setSelectedOffice] = useState({});
 
+  const [isLoadingCities, setIsLoadingCities] = useState(true); // Loading state for cities
+  const [isLoadingOffices, setIsLoadingOffices] = useState(false);
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const data = await econtService.getCities(); // Call getCities from the service
-        setCities(data.cities); // Set the cities in state
+        const data = await econtService.getCities();
+        setCities(data.cities);
       } catch (error) {
         console.error("Error fetching cities:", error);
+      } finally {
+        setIsLoadingCities(false);
       }
     };
 
@@ -63,16 +79,18 @@ const CheckoutComponent = ({ products, totalPrice }) => {
     setSelectedCity(city);
     setSearchTerm(city.name);
     setShowSuggestions(false);
-
+    setIsLoadingOffices(true);
     try {
       const data2 = await econtService.getOffices(city.id);
-      // Филтрираме офисите, като проверяваме дали city.name в адреса съвпада с избрания град
+
       const filteredOffices = data2.offices.filter(
-        office => office.address.city.name === city.name
+        (office) => office.address.city.name === city.name
       );
       setOffices(filteredOffices);
     } catch (error) {
       console.error("Error fetching offices:", error);
+    } finally {
+      setIsLoadingOffices(false); // Set loading state to false after fetching
     }
   };
 
@@ -83,8 +101,49 @@ const CheckoutComponent = ({ products, totalPrice }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateName(sender.name)) {
+      enqueueSnackbar("Името трябва да съдържа повече от 1 символ!", {
+        variant: "error",
+      });
+      return;
+    }
+
+    if (!validateName(sender.surname)) {
+      enqueueSnackbar("Фамилията трябва да съдържа повече от 1 символ!", {
+        variant: "error",
+      });
+      return;
+    }
+
+    if (!validateEmail(sender.email)) {
+      enqueueSnackbar("Моля, въведете валиден e-mail!", { variant: "error" });
+      return;
+    }
+
+    if (!validatePhoneNumber(sender.phone)) {
+      enqueueSnackbar(
+        "Моля, въведете валиден телефонен номер (български стандарт)!",
+        { variant: "error" }
+      );
+      return;
+    }
+
+    if (!validateCity(selectedCity, cities)) {
+      enqueueSnackbar("Моля, изберете валиден град от списъка!", {
+        variant: "error",
+      });
+      return;
+    }
+
+    if (!validateOffice(selectedOffice, offices)) {
+      enqueueSnackbar("Моля, изберете валиден офис от списъка!", {
+        variant: "error",
+      });
+      return;
+    }
+
     const orderInfo = {
-      name: sender.name,
+      name: `${sender.name} ${sender.surname}`,
       phone: sender.phone,
       email: sender.email,
       office: {
@@ -108,11 +167,12 @@ const CheckoutComponent = ({ products, totalPrice }) => {
     console.log(orderInfo);
     try {
       await econtService.sendOrder(orderInfo);
- navigate("/acceptedOrder");
+      navigate("/acceptedOrder");
     } catch (error) {
-      alert("Error fetching:" +{error});
+      enqueueSnackbar("Грешка при изпращане на поръчката!" + error, {
+        variant: "error",
+      });
     }
-   
   };
 
   return (
@@ -125,33 +185,36 @@ const CheckoutComponent = ({ products, totalPrice }) => {
 
         {/* Sender Information */}
         <div className="form-group mb-4 col-md-6 row pe-3 justify-content-center">
-          <div className="col-10">
+          <div className="col-12">
             <label htmlFor="name" className="form-label fw-semibold">
-              Име и фамилия:
+              Име :
             </label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Име и фамилия"
+              placeholder="Име"
               value={sender.name}
               onChange={(e) => setSender({ ...sender, name: e.target.value })}
               required
             />
           </div>
-          <div className="col-10">
+          <div className="col-12">
             <label htmlFor="name" className="form-label fw-semibold">
-              Тел.номер:
+              Фамилия:
             </label>
             <input
-              type="tel"
+              type="text"
               className="form-control mb-2"
-              placeholder="тел. номер"
-              value={sender.phone}
-              onChange={(e) => setSender({ ...sender, phone: e.target.value })}
+              placeholder="Фамилия"
+              value={sender.surname}
+              onChange={(e) =>
+                setSender({ ...sender, surname: e.target.value })
+              }
               required
             />
           </div>
-          <div className="col-md-10">
+
+          <div className="col-12">
             <label htmlFor="name" className="form-label fw-semibold">
               e-mail:
             </label>
@@ -169,6 +232,19 @@ const CheckoutComponent = ({ products, totalPrice }) => {
         <div className="form-group mb-4  col-md-6 row">
           <div className="col-12">
             <label htmlFor="name" className="form-label fw-semibold">
+              Тел.номер:
+            </label>
+            <input
+              type="tel"
+              className="form-control mb-2"
+              placeholder="тел. номер"
+              value={sender.phone}
+              onChange={(e) => setSender({ ...sender, phone: e.target.value })}
+              required
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="city" className="form-label fw-semibold">
               Град:
             </label>
             <input
@@ -184,85 +260,100 @@ const CheckoutComponent = ({ products, totalPrice }) => {
               required
             />
 
-            {showSuggestions && filteredCities.length > 0 && (
-              <ul
-                style={{
-                  border: "1px solid #ccc",
-                  listStyle: "none",
-                  padding: "0",
-                  margin: "0",
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                }}
-              >
-                {filteredCities.map((city) => (
-                  <li
-                    key={city.id}
-                    onClick={() => handleCitySelect(city)}
+            {showSuggestions && (
+              <>
+                {isLoadingCities && <p>Loading cities...</p>}
+                {isLoadingCities && filteredCities.length > 0 && (
+                  <ul
                     style={{
-                      padding: "8px",
-                      cursor: "pointer",
-                      backgroundColor: "#fff",
+                      border: "1px solid #ccc",
+                      listStyle: "none",
+                      padding: "0",
+                      margin: "0",
+                      maxHeight: "200px",
+                      overflowY: "auto",
                     }}
-                    onMouseDown={(e) => e.preventDefault()} // За предотвратяване на blur при избор на град
                   >
-                    {city.name} ({city.postCode})
-                  </li>
-                ))}
-              </ul>
+                    {filteredCities.map((city) => (
+                      <li
+                        key={city.id}
+                        onClick={() => handleCitySelect(city)}
+                        style={{
+                          padding: "8px",
+                          cursor: "pointer",
+                          backgroundColor: "#fff",
+                        }}
+                        onMouseDown={(e) => e.preventDefault()} // Prevent blur on select
+                      >
+                        {city.name} ({city.postCode})
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
             )}
           </div>
-          <div className="col-12">
-            <label htmlFor="name" className="form-label fw-semibold">
-              Офис на еконт:
-            </label>
-            <input
-              type="text"
-              value={searchOffice}
-              className="form-control mb-2"
-              onChange={(e) => {
-                setSearchOffice(e.target.value);
-                setShowSuggestionOffices(true);
-              }}
-              onFocus={() => setShowSuggestionOffices(true)}
-              placeholder="Въведи офис"
-              required
-            />
 
-            {showSuggestionOffices && filteredOffices.length > 0 && (
-              <ul
+          <div className="col-12">
+  <label htmlFor="office" className="form-label fw-semibold">
+    Офис на еконт:
+  </label>
+  <input
+    type="text"
+    value={searchOffice}
+    className="form-control mb-2"
+    onChange={(e) => {
+      setSearchOffice(e.target.value);
+      setShowSuggestionOffices(true);
+    }}
+    onFocus={() => setShowSuggestionOffices(true)}
+    placeholder="Въведи офис"
+    required
+  />
+
+  {showSuggestionOffices && (
+    <>
+      {isLoadingOffices ? (
+        <p>Loading offices...</p>
+      ) : (
+        filteredOffices.length > 0 && (
+          <ul
+            style={{
+              border: "1px solid #ccc",
+              listStyle: "none",
+              padding: "0",
+              margin: "0",
+              maxHeight: "200px",
+              overflowY: "auto",
+            }}
+          >
+            {filteredOffices.map((office) => (
+              <li
+                key={office.id}
+                onClick={() => handleOfficeSelect(office)}
                 style={{
-                  border: "1px solid #ccc",
-                  listStyle: "none",
-                  padding: "0",
-                  margin: "0",
-                  maxHeight: "200px",
-                  overflowY: "auto",
+                  padding: "8px",
+                  cursor: "pointer",
+                  backgroundColor: "#fff",
                 }}
+                onMouseDown={(e) => e.preventDefault()} // Prevent blur on select
               >
-                {filteredOffices.map((office) => (
-                  <li
-                    key={office.id}
-                    onClick={() => handleOfficeSelect(office)}
-                    style={{
-                      padding: "8px",
-                      cursor: "pointer",
-                      backgroundColor: "#fff",
-                    }}
-                    onMouseDown={(e) => e.preventDefault()}
-                  >
-                    {office.name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+                {office.name}
+              </li>
+            ))}
+          </ul>
+        )
+      )}
+    </>
+  )}
+</div>
+
         </div>
 
         <button
           type="submit"
           className="btn btn-success"
-          style={{ width: "35%" }}
+          style={{ width: "40%" }}
         >
           Завърши поръчката
         </button>

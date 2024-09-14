@@ -11,9 +11,8 @@ export const authServiceBuilder = () => {
         register: (data) => request.post(`${baseUrl}/register`, data),
         logout: () => request.get(`${baseUrl}/logout`),
         verifyEmail: (data) => request.post(`${baseUrl}/verify-email`, data),
-        addToFav: (data) => request.post(`${baseUrl}/addToFav`, data),
         updateCart: (data) => request.post(`${baseUrl}/updateCart`, data),
-        updateFavorites: (data) => request.post(`${baseUrl}/updateFavorites`, data),
+        updateFavourites: (data) => request.post(`${baseUrl}/updateFavourites`, data),
 
     }
 };

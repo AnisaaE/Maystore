@@ -2,12 +2,13 @@ import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { authServiceBuilder } from "../services/usersService";
+//import { useCart } from "./cardContext";
 
 export const AuthContext = createContext();
-
 export function AuthProvider({ children }) {
   const authService = authServiceBuilder();
   const [auth, setAuth] = useLocalStorage("auth", {});
+ // const {    setCartItems  } = useCart()
   const navigate = useNavigate();
 
   const onSubmitRegister = async (data) => {
@@ -30,7 +31,7 @@ export function AuthProvider({ children }) {
       setAuth(response);
       navigate("/");
     } catch (err) {
-      throw new Error("Incorrect email or password!");
+      throw new Error("Incorrect username or password!");
     }
   };
   const verifyEmail = async (data) => {
@@ -43,7 +44,9 @@ export function AuthProvider({ children }) {
   };
   const onLogout = async () => {
     console.log("logout");
-    setAuth({});
+   await setAuth({});
+  //  setCartItems([]);
+    navigate('/')
     localStorage.clear();
   };
 

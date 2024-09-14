@@ -19,6 +19,7 @@ import Login from "./components/Login/Login";
 import Favourites from "./components/Favourites/Favourites";
 import { FavouritesProvider } from "./context/favouritesContext";
 import { ErrorPage } from "./components/Error/Error";
+import ScrollToTop from "./utils/Scroll-Top";
 function App() {
   return (
     <div className="App">
@@ -27,7 +28,7 @@ function App() {
           <CartProvider>
             <ProductProvider>
               <NavigationBar />
-
+              <ScrollToTop/>
               <Routes>
                 <Route path="/" element={<Intro />} />
                 <Route path="/register" element={<Register />} />

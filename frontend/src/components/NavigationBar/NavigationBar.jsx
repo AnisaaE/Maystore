@@ -124,11 +124,6 @@ function NavigationBar() {
                       <span className="dropdown-header">Аксесоари</span>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/clothing/Шапки">
-                        Шапки
-                      </Link>
-                    </li>
-                    <li>
                       <Link className="dropdown-item" to="/clothing/Чанти">
                         Чанти
                       </Link>
@@ -139,31 +134,6 @@ function NavigationBar() {
                       </Link>
                     </li>
                   </div>
-                  {/* <div className="dropdown-column">
-                  <li>
-                      <span className="dropdown-header">Пол</span>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/genders/male">
-                        Мъже
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/genders/female">
-                        Жени
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/genders/children">
-                        Деца
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/genders/unisex">
-                        Унисекс
-                      </Link>
-                    </li>
-                  </div> */}
                 </ul>
               </li>
 
@@ -205,11 +175,6 @@ function NavigationBar() {
                     <li>
                       <Link className="dropdown-item" to="/gifts/Тефтери">
                         Тефтери
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/gifts/Печати">
-                        Печати
                       </Link>
                     </li>
                     <li>

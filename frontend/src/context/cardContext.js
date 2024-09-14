@@ -8,13 +8,15 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
-  const { isAuth, cartList } = useContext(AuthContext); // Getting cart list from AuthContext
+  const { isAuth, cartList, auth } = useContext(AuthContext); // Getting cart list from AuthContext
   const authService = authServiceBuilder();
 
   // Sync cart items with AuthContext when authenticated
   useEffect(() => {
     if (isAuth && cartList.length > 0) {
       setCartItems(cartList); // Set cart items from authenticated user's data
+    // } else if (!isAuth) {
+    //   setCartItems([]);
     }
   }, [isAuth, cartList, setCartItems]);
 
@@ -55,7 +57,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, setCartItems}}>
       {children}
     </CartContext.Provider>
   );

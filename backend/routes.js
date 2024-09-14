@@ -41,7 +41,7 @@ router.post('/users/verify-email', userController.verifyEmail);
 router.post('/users/register', userController.register);
 router.post('/users/login', userController.login);
 router.post("/users/updateCart", userController.updateCart);
-router.post('/users/updateFavorites', userController.updateFavourites);
+router.post('/users/updateFavourites', userController.updateFavourites);
 
 router.get('/me',  userController.getCurrentUser);
 router.get('/users', isSuperuser, userController.getUsers);

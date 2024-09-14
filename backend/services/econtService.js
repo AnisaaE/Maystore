@@ -38,7 +38,7 @@ const request = async (endpoint, method, body) => {
     return responseData;
 
   } catch (error) {
-    console.error('Error in request:', error.message);
+    console.error('Error in econt request:', error.message);
     throw new Error(`Error fetching data: ${error.message}`);
   }
 };
@@ -77,6 +77,7 @@ const getOffices = async (cityId) => {
 };
 const createShippingLabel = async (labelData, moreInfo) => {
   // Създаване на тялото на заявката с необходимите параметри
+  console.log(labelData.totalPrice, labelData.name, moreInfo);
   const requestBody = {
     label: {
       senderClient: {
@@ -106,13 +107,38 @@ const createShippingLabel = async (labelData, moreInfo) => {
       shipmentType: "PACK",
       weight: moreInfo.weight,
       shipmentDescription: moreInfo.description,
-      payAfterAccept: 1,
+      partialDelivery: true,
+      payAfterAccept: true,
       paymentReceiverMethod: "CASH",
       sendDate: new Date().toISOString().slice(0, 10),
+      services: {
+          declaredValueAmount: labelData.totalPrice, 
+          declaredValueCurrency: "BGN", 
+          // Добавяне на информация за наложен платеж
+          cdType: "get",
+          cdAmount: labelData.totalPrice, 
+          cdCurrency: "BGN", 
+          smsNotification:true
+      },
+      instructions: [
+        {
+          returnInstructionParams: {
+            rejectAction: "contact",
+            rejectContact: "0877707018",
+            rejectOriginalParcelPaySide: "receiver",
+            rejectReturnParcelPaySide: "receiver",
+          },
+          type: "return",
+        },
+      ],
+      paymentSenderMethod:"",
+      paymentReceiverMethod: "cash",
+      paymentReceiverAmount: "",
+      paymentReceiverAmountIsPercent: 100,
     },
-    mode: "validate", 
+    mode: "create", 
   };
-  
+ 
   return request(
     "Shipments/LabelService.createLabel.json", 
     "POST",
