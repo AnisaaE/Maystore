@@ -4,7 +4,6 @@ import { useCart } from "../../context/cardContext";
 
 export function Stickers() {
   const { addToCart } = useCart();
-
   const [stickerOptions, setStickerOptions] = useState({
     name: "Стикер",
     text: "Самир",
@@ -16,39 +15,17 @@ export function Stickers() {
     price: 0,
   });
 
-  const calculatePrice = () => {
-    const { font, height, width, quantity } = stickerOptions;
-
-    if (!height || !width) return 0;
-
-    let basePrice = 0;
-
-    // Различна базова цена в зависимост от шрифта
-    switch (font) {
-      case "Arial":
-        basePrice = 0.1;
-        break;
-      case "Times New Roman":
-        basePrice = 0.15;
-        break;
-      case "Comic Sans MS":
-        basePrice = 0.12;
-        break;
-      default:
-        basePrice = 0.1;
-    }
-
-    const area = height * width;
-    const price = basePrice * area * quantity;
-
-    return price.toFixed(2); // Връща цена с 2 знака след десетичната запетая
-  };
-
   useEffect(() => {
     const price = calculatePrice();
+    const textWidth = calculateTextWidth(
+      stickerOptions.height,
+      stickerOptions.font,
+      stickerOptions.text
+    );
     setStickerOptions((prevOptions) => ({
       ...prevOptions,
       price: price,
+      width: textWidth,
     }));
   }, [
     stickerOptions.font,
@@ -57,14 +34,84 @@ export function Stickers() {
     stickerOptions.quantity,
   ]);
 
+  const fontCoefficients = {
+    Arial: 1,
+    "Times New Roman": 0.85,
+    "Comic Sans MS": 1.1,
+    "Courier New": 0.95,
+    Verdana: 1.2,
+    Georgia: 0.9,
+    Helvetica: 1,
+    Tahoma: 1.05,
+    Calibri: 0.95,
+    Garamond: 0.8,
+    "Lucida Sans": 1.15,
+    "Trebuchet MS": 1.05,
+    Futura: 0.9,
+    "Palatino Linotype": 0.85,
+    Impact: 1.3,
+    "Gill Sans": 0.95,
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const isHeight = name === "height";
+    const isWidth = name === "width";
+
+    let newHeight = stickerOptions.height;
+    let newWidth = stickerOptions.width;
+
+    if (isHeight && value) {
+      newHeight = value;
+      newWidth = calculateTextWidth(
+        value,
+        stickerOptions.font,
+        stickerOptions.text
+      );
+    } else if (isWidth && value) {
+      newWidth = value;
+      newHeight = calculateTextHeight(
+        value,
+        stickerOptions.font,
+        stickerOptions.text
+      );
+    }
+
     setStickerOptions((prevOptions) => ({
       ...prevOptions,
       [name]: value,
+      height: newHeight,
+      width: newWidth,
     }));
   };
 
+  const calculateTextWidth = (height, font, text) => {
+    const fontCoefficient = fontCoefficients[font] || 1;
+    const numberOfCharacters = text.length;
+    const width = height * fontCoefficient * numberOfCharacters;
+
+    return width.toFixed(2);
+  };
+
+  const calculateTextHeight = (width, font, text) => {
+    const fontCoefficient = fontCoefficients[font] || 1;
+    const numberOfCharacters = text.length;
+    const height = width / (fontCoefficient * numberOfCharacters);
+
+    return height.toFixed(2);
+  };
+
+  const calculatePrice = () => {
+    const { height, width, quantity } = stickerOptions;
+
+    if (!height || !width) return 0;
+
+    const area = (width / 100) * (height / 100);
+    console.log(area);
+    const pricePerSquareMeter = 10;
+
+    const totalPrice = area * pricePerSquareMeter * quantity;
+    return totalPrice.toFixed(2);
+  };
   const handleOrder = () => {
     const stickerToAdd = {
       ...stickerOptions,
@@ -160,6 +207,19 @@ export function Stickers() {
                 <option value="Arial">Arial</option>
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Calibri">Calibri</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Lucida Sans">Lucida Sans</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Futura">Futura</option>
+                <option value="Palatino Linotype">Palatino Linotype</option>
+                <option value="Impact">Impact</option>
+                <option value="Gill Sans">Gill Sans</option>
               </select>
             </div>
 
@@ -230,8 +290,8 @@ export function Stickers() {
                 htmlFor="price"
                 className="form-label mb-0 mt-1"
                 style={{
-                  fontSize: "20px", 
-                  fontWeight: "bold", 
+                  fontSize: "20px",
+                  fontWeight: "bold",
                 }}
               >
                 Цена
@@ -242,12 +302,12 @@ export function Stickers() {
                 name="price"
                 className="form-control  mb-2"
                 style={{
-                  fontSize: "24px", 
+                  fontSize: "24px",
                   color: "#d9534f",
-                  backgroundColor: "#f8f9fa", 
-                  textAlign: "center", 
+                  backgroundColor: "#f8f9fa",
+                  textAlign: "center",
                 }}
-                value={`${stickerOptions.price} лв`} 
+                value={`${stickerOptions.price} лв`}
                 readOnly
               />
             </div>
@@ -255,7 +315,9 @@ export function Stickers() {
         </div>
 
         <div className="col-md-4 d-flex align-items-end justify-content-end">
-          <button className="btn btn-danger btn-lg w-100" onClick={handleOrder}>Поръчай</button>
+          <button className="btn btn-danger btn-lg w-100" onClick={handleOrder}>
+            Поръчай
+          </button>
         </div>
       </div>
 
@@ -264,11 +326,19 @@ export function Stickers() {
       </div> */}
       <div className="row transportSection mx-4 d-flex justify-content-center my-1 mb-5">
         <div className="col-md-6 px-4 d-flex flex-column pt-3">
-          <div className="display-6">Tранспортна реклама за нашите бизнес клиенти</div>
-          <p className="text-muted mt-3">Свържете се с нас за получаване на оферта </p>
+          <div className="display-6">
+            Tранспортна реклама за нашите бизнес клиенти
+          </div>
+          <p className="text-muted mt-3">
+            Свържете се с нас за получаване на оферта{" "}
+          </p>
         </div>
         <div className="col-md-4 transportImg">
-          <img src={require("../../assets/images/transport.jpeg")} alt="" className="transportImg"/>
+          <img
+            src={require("../../assets/images/transport.jpeg")}
+            alt=""
+            className="transportImg"
+          />
         </div>
       </div>
     </div>

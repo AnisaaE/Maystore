@@ -90,7 +90,7 @@ const CheckoutComponent = ({ products, totalPrice }) => {
     } catch (error) {
       console.error("Error fetching offices:", error);
     } finally {
-      setIsLoadingOffices(false); // Set loading state to false after fetching
+      setIsLoadingOffices(false); 
     }
   };
 
@@ -263,7 +263,7 @@ const CheckoutComponent = ({ products, totalPrice }) => {
             {showSuggestions && (
               <>
                 {isLoadingCities && <p>Loading cities...</p>}
-                {isLoadingCities && filteredCities.length > 0 && (
+                {!isLoadingCities && filteredCities.length > 0 && (
                   <ul
                     style={{
                       border: "1px solid #ccc",
