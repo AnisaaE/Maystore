@@ -32,25 +32,26 @@ export function Stickers() {
     stickerOptions.height,
     stickerOptions.width,
     stickerOptions.quantity,
+    stickerOptions.text,
   ]);
 
   const fontCoefficients = {
-    Arial: 1,
-    "Times New Roman": 0.85,
-    "Comic Sans MS": 1.1,
-    "Courier New": 0.95,
-    Verdana: 1.2,
-    Georgia: 0.9,
-    Helvetica: 1,
-    Tahoma: 1.05,
-    Calibri: 0.95,
-    Garamond: 0.8,
-    "Lucida Sans": 1.15,
-    "Trebuchet MS": 1.05,
-    Futura: 0.9,
-    "Palatino Linotype": 0.85,
-    Impact: 1.3,
-    "Gill Sans": 0.95,
+    Arial: 0.77,
+  "Times New Roman": 0.6545, // (0.85 / 1) * 0.77
+  "Comic Sans MS": 0.847,    // (1.1 / 1) * 0.77
+  "Courier New": 0.7315,     // (0.95 / 1) * 0.77
+  Verdana: 0.924,            // (1.2 / 1) * 0.77
+  Georgia: 0.693,            // (0.9 / 1) * 0.77
+  Helvetica: 0.77,           // (1 / 1) * 0.77
+  Tahoma: 0.8085,            // (1.05 / 1) * 0.77
+  Calibri: 0.7315,           // (0.95 / 1) * 0.77
+  Garamond: 0.616,           // (0.8 / 1) * 0.77
+  "Lucida Sans": 0.8855,     // (1.15 / 1) * 0.77
+  "Trebuchet MS": 0.8085,    // (1.05 / 1) * 0.77
+  Futura: 0.693,             // (0.9 / 1) * 0.77
+  "Palatino Linotype": 0.6545,// (0.85 / 1) * 0.77
+  Impact: 1.001,             // (1.3 / 1) * 0.77
+  "Gill Sans": 0.7315   
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,22 +85,53 @@ export function Stickers() {
     }));
   };
 
-  const calculateTextWidth = (height, font, text) => {
-    const fontCoefficient = fontCoefficients[font] || 1;
-    const numberOfCharacters = text.length;
-    const width = height * fontCoefficient * numberOfCharacters;
-
-    return width.toFixed(2);
+  const cmToPx = (cm) => cm * 37.795275591; // 1 cm = 37.795275591 px
+const pxToCm = (px) => px / 37.795275591;
+  const calculateTextWidth = (heightInCm, font, text) => {
+    const heightInPx = cmToPx(heightInCm);
+  
+    // Създаваме нов canvas елемент
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    
+    // Задаваме шрифта на контекста на canvas
+    context.font = `${heightInPx}px ${font}`;
+    
+    // Измерваме ширината на текста в пиксели
+    const textWidthInPx = context.measureText(text).width;
+    
+    // Преобразуваме ширината от пиксели в сантиметри
+    const textWidthInCm = pxToCm(textWidthInPx);
+    
+    return textWidthInCm.toFixed(2);
   };
 
-  const calculateTextHeight = (width, font, text) => {
-    const fontCoefficient = fontCoefficients[font] || 1;
-    const numberOfCharacters = text.length;
-    const height = width / (fontCoefficient * numberOfCharacters);
-
-    return height.toFixed(2);
+  const calculateTextHeight = (widthInCm, font, text) => {
+    // Преобразуваме ширината от сантиметри в пиксели
+    const widthInPx = cmToPx(widthInCm);
+  
+    // Създаваме нов canvas елемент
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+  
+    // Задаваме шрифта на контекста на canvas с предполагаема височина (например 20px)
+    // Ще коригираме височината по-долу според нуждите
+    const initialFontSizePx = 20; // Примерен начален размер на шрифта
+    context.font = `${initialFontSizePx}px ${font}`;
+  
+    // Измерваме ширината на текста при началния размер на шрифта
+    const textWidthInPx = context.measureText(text).width;
+  
+    // Пропорционално коригираме височината, за да получим правилната стойност
+    const scaleFactor = widthInPx / textWidthInPx;
+    const finalHeightInPx = initialFontSizePx * scaleFactor;
+  
+    // Преобразуваме височината от пиксели в сантиметри
+    const finalHeightInCm = pxToCm(finalHeightInPx);
+  
+    return finalHeightInCm.toFixed(2);
   };
-
+  
   const calculatePrice = () => {
     const { height, width, quantity } = stickerOptions;
 

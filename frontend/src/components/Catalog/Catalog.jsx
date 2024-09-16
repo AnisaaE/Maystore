@@ -8,17 +8,21 @@ function ProductCatalog() {
   const { getCatalogByCategory, products } = useContext(ProductContext);
   const { subcategory } = useParams();
   let filteredProducts = products;
-  if(subcategory){
+  if (subcategory) {
     filteredProducts = getCatalogByCategory(subcategory);
   }
 
   return (
     <div className="container m-5">
-    
-        <h2 className="category-title pt-5 text-muted">
-          {subcategory? subcategory: "Всички артикули"}
-        </h2>
-    
+      <h2 className="category-title pt-5 text-muted">
+        {subcategory === "clothing"
+          ? "Работно облекло"
+          : subcategory === "gifts"
+          ? "Фирмени артикули"
+          : subcategory
+          ? subcategory
+          : "Всички артикули"}{" "}
+      </h2>
 
       <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center mt-3">
         {filteredProducts.map((product) => (

@@ -2,28 +2,51 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import WhyChooseUs from "./WhyUS/WhyUs";
 import Category from "./Category/Category";
+import { useState } from "react";
 
 export function Intro() {
+  const [showText, setShowText] = useState(true); 
+
+  const toggleContent = () => {
+    setShowText(!showText); 
+  };
+
   return (
     <div>
       <section id="intro" className="custom-height">
         <div className="container-fluid bg-image pe-0 h-100">
           <div className="row justify-content-center align-items-center h-100">
-            <div className="col-md-6 align-items-center transparent-background text-center text-md-start ms-3">
-              <div className="m-3 text-center text-md-start">
-                <h1>
-                  <div className="display-2 pb-2 ">
-                    Реклама за вашия бизнес или събитие
-                  </div>
-                  <div className="display-6 ">
-                 <small> Подсилете екипния дух и оставете трайно впечатление на клиентите и партньорите си</small>
-                  </div>
-                </h1>
-                <Link to="/all" className="custom-link">
-                  Виж повече
-                </Link>
-              </div>
+          <div className="col-md-6 row flex-row align-items-center transparent-background text-center text-md-start ms-1">
+      {/* Тази част ще се сменя според състоянието */}
+      <div className=" text-center text-md-start col-11">
+        {showText ? (
+          <h1>
+            <div className="display-2 pb-2 ">
+              Реклама за вашия бизнес или събитие
             </div>
+            <div className="display-6 ">
+              <small>Подсилете екипния дух, оставете трайно впечатление на клиентите и партньорите си</small>
+            </div>
+            <Link to="/all" className="custom-link">
+              Виж повече
+            </Link>
+          </h1>
+        ) : (
+          <img
+            src="https://via.placeholder.com/400"
+            alt="Placeholder"
+            className="img-fluid"
+          />
+        )}
+      </div>
+
+      {/* Бутонът със стрелката */}
+      <div className="col-1">
+        <button onClick={toggleContent} className="btn btn-black">
+          <i className="bi bi-caret-right-fill" style={{ fontSize: '24px' }}></i>
+        </button>
+      </div>
+    </div>
             <div className="col row h-100 d-none d-md-flex mt-2">
               <div className="col-12 col-lg-8 h-100 mt-2 image-container d-none d-md-flex justify-content-center">
                

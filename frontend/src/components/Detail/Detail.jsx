@@ -233,68 +233,27 @@ const Detail = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="color" className="form-label">
-                  ЦВЯТ:
-                </label>
-                <div id="color-options" className="d-flex flex-wrap">
-                  <label
-                    className={`color-option ${
-                      selectedColor === "#ffffff" ? "selected" : ""
-                    }`}
-                    style={{ backgroundColor: "#ffffff" }}
-                  >
-                    <input
-                      type="radio"
-                      name="color"
-                      value="#ffffff"
-                      checked={selectedColor === "#ffffff"}
-                      onChange={handleColorChange}
-                    />
-                  </label>
-                  <label
-                    className={`color-option ${
-                      selectedColor === "#000000" ? "selected" : ""
-                    }`}
-                    style={{ backgroundColor: "#000000" }}
-                  >
-                    <input
-                      type="radio"
-                      name="color"
-                      value="#000000"
-                      checked={selectedColor === "#000000"}
-                      onChange={handleColorChange}
-                    />
-                  </label>
-                  <label
-                    className={`color-option ${
-                      selectedColor === "#28a745" ? "selected" : ""
-                    }`}
-                    style={{ backgroundColor: "#28a745" }}
-                  >
-                    <input
-                      type="radio"
-                      name="color"
-                      value="#28a745"
-                      checked={selectedColor === "#28a745"}
-                      onChange={handleColorChange}
-                    />
-                  </label>
-                  <label
-                    className={`color-option ${
-                      selectedColor === "#dc3545" ? "selected" : ""
-                    }`}
-                    style={{ backgroundColor: "#dc3545" }}
-                  >
-                    <input
-                      type="radio"
-                      name="color"
-                      value="#dc3545"
-                      checked={selectedColor === "#dc3545"}
-                      onChange={handleColorChange}
-                    />
-                  </label>
-                </div>
-              </div>
+      <label htmlFor="color" className="form-label">
+        ЦВЯТ:
+      </label>
+      <div id="color-options" className="d-flex flex-wrap">
+        {product.colors.map((color, index) => (
+          <label
+            key={index}
+            className={`color-option ${selectedColor === color ? "selected" : ""}`}
+            style={{ backgroundColor: color }}
+          >
+            <input
+              type="radio"
+              name="color"
+              value={color}
+              checked={selectedColor === color}
+              onChange={handleColorChange}
+            />
+          </label>
+        ))}
+      </div>
+    </div>
 
               <div className="mb-3">
                 <label htmlFor="print-front" className="form-label">
@@ -389,13 +348,13 @@ const Detail = () => {
               </div>
               <div className="mt-4 text-muted small">
                 <p>
-                  <strong>1 бр. ед. цена:</strong> 18,00 лв.
+                  <strong>1 бр. ед. цена:</strong> {product.price}
                 </p>
                 <p>
-                  <strong>От 2 до 19 бр. ед. цена:</strong> 13,00 лв.
+                  <strong>От 2 до 19 бр. ед. цена:</strong> {product.price-5}
                 </p>
                 <p>
-                  <strong>Над 20 бр. ед. цена:</strong> 11,00 лв.
+                  <strong>Над 20 бр. ед. цена:</strong> {product.price-7}
                 </p>
               </div>
 

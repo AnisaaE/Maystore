@@ -37,6 +37,7 @@ function App() {
                 <Route path="/stickers" element={<Stickers />} />
                 <Route path="/all" element={<ProductCatalog />} />
                 <Route path="/cart" element={<ShoppingCart />} />
+                
                 <Route
                   path="/clothing/:subcategory"
                   element={<ProductCatalog />}

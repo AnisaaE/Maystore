@@ -160,3 +160,15 @@
     height: 450px; 
   }
 }
+
+.bi-caret-right-fill {
+  font-size: 2em; /* Начален размер на стрелката */
+  transition: font-size 0.3s ease; /* Плавен преход при промяна на размера */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Добавя сянка при hover */
+
+}
+
+.bi-caret-right-fill:hover {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Добавя сянка при hover */
+}
+

@@ -9,7 +9,8 @@ const AddProduct = () => {
     category: '',
     subcategory: '',
   });
-  const [images, setImages] = useState(['']); // State to hold image file paths
+  const [images, setImages] = useState(['']); 
+  const [colors, setColors] = useState(['']);
   const subcategories = {
     Облекло: [
       'Тениски',
@@ -37,7 +38,11 @@ const AddProduct = () => {
       setFormData({ ...formData, category: value, subcategory: '' });
     }
   };
-
+const handleColorChange = (index, event) => {
+  const newColors = [...colors];
+  newColors[index] = event.target.value;
+  setColors(newColors);
+}
   const handleFileChange = (index, event) => {
     const files = [...images];
     files[index] = event.target.files[0];
@@ -46,6 +51,10 @@ const AddProduct = () => {
 
   const handleAddImage = () => {
     setImages([...images, '']);
+  };
+
+  const handleAddColor = () => {
+    setColors([...colors, '']);
   };
 
   const handleSubmit = async (e) => {
@@ -62,14 +71,18 @@ const AddProduct = () => {
         formDataToSend.append('images', image); // Уверете се, че 'images' е правилният ключ
       }
     });
-  
+    colors.forEach((color) => {
+      if (color) {
+        formDataToSend.append('colors', color); 
+      }
+    });
     try {
       const response = await fetch('http://localhost:4000/add', {
         method: 'POST',
         body: formDataToSend,
         // Headers за `multipart/form-data` са автоматично настроени от браузъра при използване на FormData
       });
-  
+  console.log(formDataToSend);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -89,6 +102,7 @@ const AddProduct = () => {
       subcategory: '',
     });
     setImages(['']);
+    setColors(['']);
   
     // Redirect to home page
     navigate('/products');
@@ -176,8 +190,34 @@ const AddProduct = () => {
                 </select>
               </div>
             )}
+
+
+<div className="col-md-6">
+  <label className="form-label fw-semibold" htmlFor="colors">Add colors:</label>
+  <div className="row"> 
+    {colors.map((_, index) => (
+      <div key={index} className="input-group " style={{ width: '15%' }}> 
+        <input
+          type="color"
+          className="form-control form-control-color thumbnail-img"
+          onChange={(e) => handleColorChange(index, e)}
+        />
+        {index === colors.length - 1 && (
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm ms-2 fw-bold"
+            onClick={handleAddColor}
+          >
+            +
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
             {/* Images */}
-            <div className="col-12">
+            <div className="col-md-6">
               <label className="form-label fw-semibold">Add photos</label>
               {images.map((_, index) => (
                 <div key={index} className="input-group mb-2">

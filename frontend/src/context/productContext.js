@@ -22,12 +22,26 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   const getCatalogByCategory = (subcategory) => {
-      return products.filter(
-        (product) =>
-          product.subcategory === subcategory
-      );
-    
+    return products.filter((product) => {
+      if (subcategory === 'clothing') {
+        return product.category === 'Облекло';
+      } else if (subcategory === 'gifts') {
+        return product.category === 'Подаръци';
+      } else {
+        // Ако няма съвпадение със субкатегориите 'clothing' или 'Gifts',
+        // се филтрира според обичайната субкатегория.
+        return product.subcategory === subcategory;
+      }
+    });
   };
+  // const getCatalogByCategory = (subcategory) => {
+
+  //     return products.filter(
+  //       (product) =>
+  //         product.subcategory === subcategory
+  //     );
+    
+  // };
 
 
   const getProduct = (productId) => {

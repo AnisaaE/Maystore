@@ -11,7 +11,7 @@ const uploadImage = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { name, price, category, subcategory } = req.body;
+    const { name, price, category, subcategory, colors } = req.body;
 
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: "No images uploaded" });
@@ -35,6 +35,7 @@ const addProduct = async (req, res) => {
       price,
       category,
       subcategory,
+      colors,
       images: imageUrls,
     });
 

@@ -27,6 +27,11 @@ const productSchema = new Schema(
       type: String,
       trim: true,
     },
+    colors: [
+      {
+        type: String,
+      },
+    ],
     images: [
       {
         type: String,

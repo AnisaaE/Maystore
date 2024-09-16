@@ -16,10 +16,11 @@ function NavigationBar() {
       </div>
       <nav className="navbar navbar-expand-lg navbar-custom p-3 bg-custom-purple fixed-top">
         <div className="container-fluid montserrat">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand me-lg-5" to="/">
             <img
               src={process.env.PUBLIC_URL + "/logo.png"}
               alt="Maystore Logo"
+              style={{ width: "5em", height: "auto"  }} // Adjust size as needed
               className="img-fluid d-inline-block align-top logo"
             />
           </Link>
@@ -190,11 +191,6 @@ function NavigationBar() {
                   Стикери
                 </Link>
               </li>
-              <li>
-                <Link className="nav-link ms-2" to="/stickers">
-                  Промо пакети
-                </Link>
-              </li>
             </ul>
           </div>
           <Link to="/favorites" className="cart-icon">
@@ -217,7 +213,7 @@ function NavigationBar() {
           {" "}
         </div>
       </nav>
-      <div style={{ marginTop: "50px" }}></div>
+      <div style={{ marginTop: "40px" }}></div>
     </div>
   );
 }
