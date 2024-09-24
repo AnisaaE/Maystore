@@ -3,11 +3,17 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContex";
 import "./style.css";
 import { useCart } from "../../context/cardContext";
+import { useFavourites } from "../../context/favouritesContext";
 
 function NavigationBar() {
   const { user, onLogout , isAuth} = useContext(AuthContext);
-  const { cartItems } = useCart();
-
+  const { cartItems, clearCart2 } = useCart();
+  const {clearFavourites}= useFavourites();
+ const handleonLogout = () => {
+   onLogout();
+   clearCart2();
+   clearFavourites();
+ }
   return (
     <div>
       <div class="free-shipping-banner d-flex justify-content-center bg-black text-light align-items-center">
@@ -207,7 +213,7 @@ function NavigationBar() {
           </Link>
           {!isAuth? <Link to="/register" className="cart-icon">
           <i class="bi bi-person-circle" style={{ fontSize: "1.5rem", color: "white" }}></i>
-          </Link>: <button onClick={onLogout} className="cart-icon btn">
+          </Link>: <button onClick={handleonLogout} className="cart-icon btn">
     <i className="bi bi-box-arrow-right" style={{ fontSize: "1.5rem", color: "white" }}></i>
   </button>} 
           {" "}

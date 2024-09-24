@@ -11,7 +11,6 @@ export const FavouritesProvider = ({ children }) => {
   const { isAuth, favourites: userFavourites, auth } = useContext(AuthContext); 
   const [favourites, setFavourites] = useLocalStorage("favourites", []);
   const authService = authServiceBuilder();
-
   
   useEffect(() => {
     if (isAuth && userFavourites.length > 0) {
@@ -47,9 +46,11 @@ export const FavouritesProvider = ({ children }) => {
       }
     }
   };
-
+const clearFavourites = async () => {
+  setFavourites([]);
+}
   return (
-    <FavouritesContext.Provider value={{ favourites, addToFavourites, removeFromFavourites }}>
+    <FavouritesContext.Provider value={{ favourites, addToFavourites, removeFromFavourites, clearFavourites }}>
       {children}
     </FavouritesContext.Provider>
   );

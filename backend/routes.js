@@ -26,7 +26,7 @@ router.get('/products', productController.getAllProducts);
 router.get('/products/:id', productController.getOneProduct);
 
 router.post('/econt/validate', orderController.validateOrder);
-router.post('/econt/create', orderController.createOrder);
+router.post('/econt/create', orderController.createOrder); //may be deleted
 router.post('/econt/getCities', orderController.getCitiesController);
 router.post('/econt/getOffices/:id', orderController.getOfficesController);
 router.post('/econt/sendOrder', orderController.sendOrder);

@@ -11,12 +11,9 @@ const Favourites = () => {
       <div className="row">
         {favourites.length > 0 ? (
           favourites.map((product) => (
-            
-            
             <div key={product.id} className="col-12 col-md-6 col-lg-3 my-3 d-flex align-items-center justify-content-center">
               <div className="card mb-3" style={{ width: "18rem" }}>
               <Link to={`/product/${product.id}`} className="text-decoration-none">
-
                 <img src={product.images[0]} alt={product.name} className="card-img-top" />
                 </Link>
                 <div className="card-body">

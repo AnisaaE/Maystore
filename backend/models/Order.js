@@ -64,11 +64,11 @@ const OrderedProductSchema = new Schema({
   },
   size: {
     type: String,
-    default: '',
+    default: "",
   },
   color: {
     type: String,
-    default: '',
+    default: "",
   },
   quantity: {
     type: Number,
@@ -80,21 +80,36 @@ const OrderedProductSchema = new Schema({
   },
   printFront: {
     type: String,
-    default: '',
+    default: "",
   },
   printBack: {
     type: String,
-    default: '',
+    default: "",
   },
   uploadFront: {
-    type: String, // Може да е `String` или `Buffer` в зависимост от начина, по който се съхраняват изображенията
+    type: String,
     default: null,
   },
   uploadBack: {
     type: String, // Може да е `String` или `Buffer` в зависимост от начина, по който се съхраняват изображенията
     default: null,
-  }
-  
+  },
+  text: {
+    type: String,
+    default: "",
+  },
+  font: {
+    type: String,
+    default: "",
+  },
+  height: {
+    type: String,
+    default: "",
+  },
+  width: {
+    type: String,
+    default: "",
+  },
 });
 const orderSchema = new Schema(
   {
@@ -118,7 +133,7 @@ const orderSchema = new Schema(
       trim: true,
     },
     office: {
-      type: officeSchema, 
+      type: officeSchema,
       required: true,
     },
     products: {
@@ -134,10 +149,26 @@ const orderSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    pdfUrl: {
+      type: String,
+      default: "",
+    },
     status: {
       type: String,
       enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
       default: "Pending",
+    },
+    shipmentNumber: {
+      type: String,
+      default: "",
+    },
+    weight: {
+      type: String,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: "",
     },
   },
   {

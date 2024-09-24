@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import "./Stickers.css";
 import { useCart } from "../../context/cardContext";
+import sticker from "../../assets/images/sticker.png";
+
+import { useSnackbar } from "notistack";
+import { v4 as uuidv4 } from "uuid";
+
 
 export function Stickers() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { addToCart } = useCart();
   const [stickerOptions, setStickerOptions] = useState({
     name: "Стикер",
@@ -35,24 +42,6 @@ export function Stickers() {
     stickerOptions.text,
   ]);
 
-  const fontCoefficients = {
-    Arial: 0.77,
-  "Times New Roman": 0.6545, // (0.85 / 1) * 0.77
-  "Comic Sans MS": 0.847,    // (1.1 / 1) * 0.77
-  "Courier New": 0.7315,     // (0.95 / 1) * 0.77
-  Verdana: 0.924,            // (1.2 / 1) * 0.77
-  Georgia: 0.693,            // (0.9 / 1) * 0.77
-  Helvetica: 0.77,           // (1 / 1) * 0.77
-  Tahoma: 0.8085,            // (1.05 / 1) * 0.77
-  Calibri: 0.7315,           // (0.95 / 1) * 0.77
-  Garamond: 0.616,           // (0.8 / 1) * 0.77
-  "Lucida Sans": 0.8855,     // (1.15 / 1) * 0.77
-  "Trebuchet MS": 0.8085,    // (1.05 / 1) * 0.77
-  Futura: 0.693,             // (0.9 / 1) * 0.77
-  "Palatino Linotype": 0.6545,// (0.85 / 1) * 0.77
-  Impact: 1.001,             // (1.3 / 1) * 0.77
-  "Gill Sans": 0.7315   
-  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     const isHeight = name === "height";
@@ -85,53 +74,87 @@ export function Stickers() {
     }));
   };
 
-  const cmToPx = (cm) => cm * 37.795275591; // 1 cm = 37.795275591 px
-const pxToCm = (px) => px / 37.795275591;
-  const calculateTextWidth = (heightInCm, font, text) => {
-    const heightInPx = cmToPx(heightInCm);
-  
-    // Създаваме нов canvas елемент
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    
-    // Задаваме шрифта на контекста на canvas
-    context.font = `${heightInPx}px ${font}`;
-    
-    // Измерваме ширината на текста в пиксели
-    const textWidthInPx = context.measureText(text).width;
-    
-    // Преобразуваме ширината от пиксели в сантиметри
-    const textWidthInCm = pxToCm(textWidthInPx);
-    
-    return textWidthInCm.toFixed(2);
-  };
+// Коефициенти за различни шрифтове
+const fontCoefficients = {
+  'Arial': 0.77,
+  'Tahoma': 1.05,
+  'Times New Roman': 0.85,
+  'Comic Sans MS': 1.1,
+  'Courier New': 0.95,
+  'Verdana': 1.2,
+  'Georgia': 0.9,
+  'Helvetica': 1,
+  'Calibri': 0.95,
+  'Garamond': 0.8,
+  'Lucida Sans': 1.15,
+  'Trebuchet MS': 1.05,
+  'Futura': 0.9,
+  'Palatino Linotype': 0.85,
+  'Impact': 1.3,
+  'Gill Sans': 0.95,
+  'Optima': 0.9,
+  'Franklin Gothic Medium': 1.05,
+  'Century Gothic': 1.1
+};
 
-  const calculateTextHeight = (widthInCm, font, text) => {
-    // Преобразуваме ширината от сантиметри в пиксели
-    const widthInPx = cmToPx(widthInCm);
+// Функция за преобразуване на cm в px и обратно
+const cmToPx = (cm) => cm * 37.795275591;
+const pxToCm = (px) => px / 37.795275591;
+
+// Функция за изчисляване на размерите на текста
+const calculateTextWidth = (heightInCm, font, text, letterSpacingFactor = 0.05) => {
+  const heightInPx = cmToPx(heightInCm);
   
-    // Създаваме нов canvas елемент
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+  // Създаваме нов canvas елемент
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
   
-    // Задаваме шрифта на контекста на canvas с предполагаема височина (например 20px)
-    // Ще коригираме височината по-долу според нуждите
-    const initialFontSizePx = 20; // Примерен начален размер на шрифта
-    context.font = `${initialFontSizePx}px ${font}`;
+  // Задаваме шрифта на контекста на canvas
+  context.font = `${heightInPx}px ${font}`;
   
-    // Измерваме ширината на текста при началния размер на шрифта
-    const textWidthInPx = context.measureText(text).width;
+  // Измерваме ширината на всяка буква и добавяме междубуквеното пространство
+  let textWidthInPx = 0;
+  for (let i = 0; i < text.length; i++) {
+    const charWidth = context.measureText(text[i]).width;
+    textWidthInPx += charWidth + heightInPx * letterSpacingFactor; // Добавяме междубуквеното пространство
+  }
+
+  // Преобразуваме ширината от пиксели в сантиметри
+  const textWidthInCm = pxToCm(textWidthInPx);
   
-    // Пропорционално коригираме височината, за да получим правилната стойност
-    const scaleFactor = widthInPx / textWidthInPx;
-    const finalHeightInPx = initialFontSizePx * scaleFactor;
-  
-    // Преобразуваме височината от пиксели в сантиметри
-    const finalHeightInCm = pxToCm(finalHeightInPx);
-  
-    return finalHeightInCm.toFixed(2);
-  };
-  
+  return textWidthInCm.toFixed(2);
+};
+
+
+// Функция за изчисление на височината на текста при подадена ширина
+const calculateTextHeight = (widthInCm, font, text) => {
+  // Преобразуваме ширината от сантиметри в пиксели
+  const widthInPx = cmToPx(widthInCm);
+
+  // Създаваме нов canvas елемент
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+
+  // Променлива за размера на шрифта, която ще оптимизираме
+  let fontSizePx = 10; // Започваме с малък шрифт
+  let textWidthInPx = 0;
+
+  // Цикъл, който увеличава размера на шрифта, докато текстът достигне желаната ширина
+  do {
+    fontSizePx++;
+    context.font = `${fontSizePx}px ${font}`;
+    textWidthInPx = context.measureText(text).width;
+  } while (textWidthInPx < widthInPx); // Спира, когато широчината на текста е достатъчна
+
+  // Връща височината на текста (в пиксели), която е равна на размера на шрифта
+  const finalHeightInPx = fontSizePx;
+
+  // Преобразуваме височината от пиксели в сантиметри
+  const finalHeightInCm = pxToCm(finalHeightInPx);
+
+  return finalHeightInCm.toFixed(2);
+};
+
   const calculatePrice = () => {
     const { height, width, quantity } = stickerOptions;
 
@@ -145,25 +168,37 @@ const pxToCm = (px) => px / 37.795275591;
     return totalPrice.toFixed(2);
   };
   const handleOrder = () => {
+    if (!stickerOptions.price) {
+      console.log(stickerOptions);
+      enqueueSnackbar("Моля, попълнете всички полета!", {
+        variant: "error",
+      });
+      return;
+    }
+    const uniqueKey = uuidv4();
+      
     const stickerToAdd = {
       ...stickerOptions,
-      id: `${stickerOptions.text}-${stickerOptions.font}-${stickerOptions.color}-${stickerOptions.height}-${stickerOptions.width}`, // Generate a unique ID for each sticker
+      uniqueKey,
+      image: sticker
     };
 
-    addToCart(stickerToAdd); // Add the configured sticker to the cart
+    addToCart(stickerToAdd);
+    enqueueSnackbar("Успешно добавлено в кошницата!", { variant: "success" });
+
   };
 
   return (
     <div className="container bg-light p-1 rounded">
       {/* Header Section */}
-      {/* <div className="text-center m-4">
+       <div className="text-center m-4">
         <h1 className="fw-bold">НАПРАВИ СИ НАДПИС САМ</h1>
         <ul className="list-inline">
           <li className="list-inline-item mx-2 text-success">бързо</li>
           <li className="list-inline-item mx-2 text-success">лесно</li>
           <li className="list-inline-item mx-2 text-success">качествено</li>
         </ul>
-      </div> */}
+      </div> 
 
       {/* Description Section */}
       <div className="row mt-5">
@@ -194,9 +229,9 @@ const pxToCm = (px) => px / 37.795275591;
         {/* Image Section */}
         <div className="col-md-6 text-center p-0">
           <img
-            src="https://via.placeholder.com/400x200?text=Your+Car+Image+Here"
+            src={require("../../assets/images/sticker.png")}
             alt="Car"
-            className="img-fluid rounded"
+          //  className="img-fluid rounded"
             style={{ maxHeight: "200px" }}
           />
         </div>

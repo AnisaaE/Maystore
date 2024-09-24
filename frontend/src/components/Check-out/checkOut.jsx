@@ -10,7 +10,7 @@ import {
 } from "../../utils/validation";
 import { useNavigate } from "react-router-dom";
 
-const CheckoutComponent = ({ products, totalPrice }) => {
+const CheckoutComponent = ({ products, totalPrice, handleClearCart }) => {
   const navigate = useNavigate();
   const econtService = econtServiceBuilder();
   const { enqueueSnackbar } = useSnackbar();
@@ -68,11 +68,12 @@ const CheckoutComponent = ({ products, totalPrice }) => {
     if (searchOffice === "") {
       setFilteredOffices(offices);
     } else {
-      setFilteredOffices(
-        offices.filter((office) =>
-          office.name.toLowerCase().startsWith(searchOffice.toLowerCase())
-        )
+      let filtered = offices.filter((office) =>
+        office.name.toLowerCase().startsWith(searchOffice.toLowerCase())
       );
+    
+      // Накрая задаваме резултата в състоянието
+      setFilteredOffices(filtered);
     }
   }, [searchOffice, offices]);
   const handleCitySelect = async (city) => {
@@ -168,6 +169,7 @@ const CheckoutComponent = ({ products, totalPrice }) => {
     try {
       await econtService.sendOrder(orderInfo);
       navigate("/acceptedOrder");
+      handleClearCart();
     } catch (error) {
       enqueueSnackbar("Грешка при изпращане на поръчката!" + error, {
         variant: "error",
@@ -295,9 +297,13 @@ const CheckoutComponent = ({ products, totalPrice }) => {
           </div>
 
           <div className="col-12">
-  <label htmlFor="office" className="form-label fw-semibold">
+            <div className="row flex-column mb-2">
+  <label htmlFor="office" className="form-label fw-semibold mb-0">
     Офис на еконт:
   </label>
+  <small className="text-muted">
+    (Моля, не избирайте Еконтомат)
+  </small></div>
   <input
     type="text"
     value={searchOffice}

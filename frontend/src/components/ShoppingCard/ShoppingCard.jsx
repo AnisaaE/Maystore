@@ -48,9 +48,9 @@ const ShoppingCart = () => {
       className="container my-5 p-4 bg-light rounded"
       
     >
-      <h2 className="text-center mb-4">Вашата количка</h2>
+      <h2 className="text-center mb-4 ">Вашата количка</h2>
       {cartItems.length === 0 ? (
-        <p className="text-center text-muted fs-5">Кошницата е празна.</p>
+        <p className="text-center text-muted fs-5" style={{ minHeight: "60vh" }}>Кошницата е празна.</p>
       ) : (
         <>
           <ul className="list-group mb-4">
@@ -125,7 +125,7 @@ const ShoppingCart = () => {
         </>
       )}
     </div>
-    {cartItems.length >0 ?<CheckoutComponent products={cartItems} totalPrice={totalPrice}/>: ""}
+    {cartItems.length >0 ?<CheckoutComponent products={cartItems} totalPrice={totalPrice} handleClearCart={handleClearCart}/>: ""}
     </>
   );
 };

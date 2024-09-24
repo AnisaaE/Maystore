@@ -13,8 +13,8 @@ app.use(cors({
   exposedHeaders: ['X-Authorization'],
 }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(authenticateToken)
 app.use(routes);
 
@@ -22,7 +22,7 @@ app.use ("/upload", express.static('upload'));
 
 mongoose.connect(`mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@cluster0.srvzl.mongodb.net/maystore`, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   }).then(() => {
     console.log('Connected to MongoDB');
   }).catch(err => {

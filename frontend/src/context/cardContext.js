@@ -55,9 +55,11 @@ export const CartProvider = ({ children }) => {
       }
     }
   };
-
+const clearCart2 = async () => {
+  setCartItems([]);
+}
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, setCartItems}}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, setCartItems, clearCart2}}>
       {children}
     </CartContext.Provider>
   );

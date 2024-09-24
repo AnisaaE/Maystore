@@ -44,13 +44,28 @@ const Detail = () => {
     setPrintBack(e.target.value);
   };
 
+  const handleFileChange = (e, setFile) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      setFile(reader.result); // Set Base64 data
+      console.log("vLIZA W BASE64 FUNKCIQ "+ reader.result);
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file); // Read file as Base64
+    }
+  };
+  
   const handleUploadFrontChange = (e) => {
-    setUploadFront(e.target.files[0]);
+    handleFileChange(e, setUploadFront);
   };
-
+  
   const handleUploadBackChange = (e) => {
-    setUploadBack(e.target.files[0]);
+    handleFileChange(e, setUploadBack);
   };
+  
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
   };
@@ -78,7 +93,7 @@ const Detail = () => {
 
   const handleBuyClick = (e) => {
     e.preventDefault();
-    
+
     if (!selectedSize) {
       enqueueSnackbar("Моля, изберете размер!", { variant: "error" });
       return;
@@ -88,14 +103,14 @@ const Detail = () => {
       enqueueSnackbar("Моля, изберете цвят!", { variant: "error" });
       return;
     }
-    
+
     if (printFront && !uploadFront) {
       enqueueSnackbar("Моля, прикачете файл за принт отпред!", {
         variant: "error",
       });
       return;
     }
-    
+
     if (printBack && !uploadBack) {
       enqueueSnackbar("Моля, прикачете файл за принт отзад!", {
         variant: "error",
@@ -113,11 +128,12 @@ const Detail = () => {
       image: mainImage,
       printFront: printFront,
       printBack: printBack,
-      uploadFront: uploadFront ? uploadFront.name : null,
-      uploadBack: uploadBack ? uploadBack.name : null,
+      uploadFront: uploadFront,
+      uploadBack: uploadBack,
       id: productId,
     };
     addToCart(productToAdd);
+    console.log()
     enqueueSnackbar("Успешно добавлено в кошницата!", { variant: "success" });
   };
 
@@ -158,172 +174,179 @@ const Detail = () => {
             <p className="text-danger h4">от {product.price} лв.</p>
 
             <form onSubmit={handleBuyClick}>
-            {product.category === "Облекло" && (
-        <>
-              <div className="mb-3">
-                <label htmlFor="size" className="form-label">
-                  РАЗМЕР:
-                </label>
-                <div className="d-flex flex-wrap justify-content-center">
-                  <div className="form-check me-3">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="size"
-                      id="sizeS"
-                      value="S"
-                      onChange={handleSizeChange}
-                    />
-                    <label className="form-check-label pe-2" htmlFor="sizeS">
-                      S
+              {product.category === "Облекло" && (
+                <>
+                  <div className="mb-3">
+                    <label htmlFor="size" className="form-label">
+                      РАЗМЕР:
                     </label>
+                    <div className="d-flex flex-wrap justify-content-center">
+                      <div className="form-check me-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="size"
+                          id="sizeS"
+                          value="S"
+                          onChange={handleSizeChange}
+                        />
+                        <label
+                          className="form-check-label pe-2"
+                          htmlFor="sizeS"
+                        >
+                          S
+                        </label>
+                      </div>
+                      <div className="form-check me-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="size"
+                          id="sizeM"
+                          value="M"
+                          onChange={handleSizeChange}
+                        />
+                        <label className="form-check-label" htmlFor="sizeM">
+                          M
+                        </label>
+                      </div>
+                      <div className="form-check me-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="size"
+                          id="sizeL"
+                          value="L"
+                          onChange={handleSizeChange}
+                        />
+                        <label className="form-check-label" htmlFor="sizeL">
+                          L
+                        </label>
+                      </div>
+                      <div className="form-check me-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="size"
+                          id="sizeXL"
+                          value="XL"
+                          onChange={handleSizeChange}
+                        />
+                        <label className="form-check-label" htmlFor="sizeXL">
+                          XL
+                        </label>
+                      </div>
+                      <div className="form-check me-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="size"
+                          id="size2XL"
+                          value="2XL"
+                          onChange={handleSizeChange}
+                        />
+                        <label className="form-check-label" htmlFor="size2XL">
+                          2XL
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div className="form-check me-3">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="size"
-                      id="sizeM"
-                      value="M"
-                      onChange={handleSizeChange}
-                    />
-                    <label className="form-check-label" htmlFor="sizeM">
-                      M
+                  <div className="mb-3">
+                    <label htmlFor="color" className="form-label">
+                      ЦВЯТ:
                     </label>
+                    <div id="color-options" className="d-flex flex-wrap">
+                      {product.colors.map((color, index) => (
+                        <label
+                          key={index}
+                          className={`color-option ${
+                            selectedColor === color ? "selected" : ""
+                          }`}
+                          style={{ backgroundColor: color }}
+                        >
+                          <input
+                            type="radio"
+                            name="color"
+                            value={color}
+                            checked={selectedColor === color}
+                            onChange={handleColorChange}
+                          />
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                  <div className="form-check me-3">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="size"
-                      id="sizeL"
-                      value="L"
-                      onChange={handleSizeChange}
-                    />
-                    <label className="form-check-label" htmlFor="sizeL">
-                      L
-                    </label>
-                  </div>
-                  <div className="form-check me-3">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="size"
-                      id="sizeXL"
-                      value="XL"
-                      onChange={handleSizeChange}
-                    />
-                    <label className="form-check-label" htmlFor="sizeXL">
-                      XL
-                    </label>
-                  </div>
-                  <div className="form-check me-3">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="size"
-                      id="size2XL"
-                      value="2XL"
-                      onChange={handleSizeChange}
-                    />
-                    <label className="form-check-label" htmlFor="size2XL">
-                      2XL
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-3">
-      <label htmlFor="color" className="form-label">
-        ЦВЯТ:
-      </label>
-      <div id="color-options" className="d-flex flex-wrap">
-        {product.colors.map((color, index) => (
-          <label
-            key={index}
-            className={`color-option ${selectedColor === color ? "selected" : ""}`}
-            style={{ backgroundColor: color }}
-          >
-            <input
-              type="radio"
-              name="color"
-              value={color}
-              checked={selectedColor === color}
-              onChange={handleColorChange}
-            />
-          </label>
-        ))}
-      </div>
-    </div>
 
-              <div className="mb-3">
-                <label htmlFor="print-front" className="form-label">
-                  ОТПРЕД – ПРИНТ:
-                </label>
-                <select
-                  id="print-front"
-                  className="form-select"
-                  value={printFront}
-                  onChange={handlePrintFrontChange}
-                >
-                  <option value="">Избери</option>
-                  <option value="center-large">
-                    Център голям- 40/28см - 10,00 лв
-                  </option>
-                  <option value="center-medium">
-                    Център среден- 20/28см - 6,00 лв
-                  </option>
-                  <option value="center-small">
-                    Център малък 8/8см - 3,00 лв
-                  </option>
-                  <option value="chest-left">
-                    Гърди ляво - 8/8см - 3,00 лв
-                  </option>
-                  <option value="chest-right">
-                    Гърди дясно - 8/8см - 3,00 лв
-                  </option>
-                </select>
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="print-front" className="form-label">
+                      ОТПРЕД – ПРИНТ:
+                    </label>
+                    <select
+                      id="print-front"
+                      className="form-select"
+                      value={printFront}
+                      onChange={handlePrintFrontChange}
+                    >
+                      <option value="">Избери</option>
+                      <option value="center-large">
+                        Център голям- 40/28см - 10,00 лв
+                      </option>
+                      <option value="center-medium">
+                        Център среден- 20/28см - 6,00 лв
+                      </option>
+                      <option value="center-small">
+                        Център малък 8/8см - 3,00 лв
+                      </option>
+                      <option value="chest-left">
+                        Гърди ляво - 8/8см - 3,00 лв
+                      </option>
+                      <option value="chest-right">
+                        Гърди дясно - 8/8см - 3,00 лв
+                      </option>
+                    </select>
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="print-back" className="form-label">
-                  ГРЪБ – ПРИНТ:
-                </label>
-                <select
-                  id="print-back"
-                  className="form-select"
-                  value={printBack}
-                  onChange={handlePrintBackChange}
-                >
-                  <option value="">Избери</option>
-                  <option value="center-large">
-                    Център голям- 40/28см - 10,00 лв
-                  </option>
-                  <option value="center-medium">
-                    Център среден- 20/28см - 6,00 лв
-                  </option>
-                  <option value="center-medium">
-                    {" "}
-                    Врат малък - 8/8см - 4,00 лв
-                  </option>
-                </select>
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="print-back" className="form-label">
+                      ГРЪБ – ПРИНТ:
+                    </label>
+                    <select
+                      id="print-back"
+                      className="form-select"
+                      value={printBack}
+                      onChange={handlePrintBackChange}
+                    >
+                      <option value="">Избери</option>
+                      <option value="center-large">
+                        Център голям- 40/28см - 10,00 лв
+                      </option>
+                      <option value="center-medium">
+                        Център среден- 20/28см - 6,00 лв
+                      </option>
+                      <option value="center-medium">
+                        {" "}
+                        Врат малък - 8/8см - 4,00 лв
+                      </option>
+                    </select>
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="upload-front" className="form-label">
-                  Прикачи файл за принт – Отпред:
-                </label>
-                <input
-                  type="file"
-                  id="upload-front"
-                  className="form-control"
-                  onChange={handleUploadFrontChange}
-                />
-              </div>
-              </>
-      )}
+                  <div className="mb-3">
+                    <label htmlFor="upload-front" className="form-label">
+                      Прикачи файл за принт – Отпред:
+                    </label>
+                    <input
+                      type="file"
+                      id="upload-front"
+                      className="form-control"
+                      onChange={handleUploadFrontChange}
+                    />
+                  </div>
+                </>
+              )}
               <div className="mb-3">
                 <label htmlFor="upload-back" className="form-label">
-                 {product.category== "Облекло"?"Прикачи файл за принт – Гръб:" : "Прикачи файл:"} 
+                  {product.category == "Облекло"
+                    ? "Прикачи файл за принт – Гръб:"
+                    : "Прикачи файл:"}
                 </label>
                 <input
                   type="file"
@@ -351,10 +374,10 @@ const Detail = () => {
                   <strong>1 бр. ед. цена:</strong> {product.price}
                 </p>
                 <p>
-                  <strong>От 2 до 19 бр. ед. цена:</strong> {product.price-5}
+                  <strong>От 2 до 19 бр. ед. цена:</strong> {product.price - 5}
                 </p>
                 <p>
-                  <strong>Над 20 бр. ед. цена:</strong> {product.price-7}
+                  <strong>Над 20 бр. ед. цена:</strong> {product.price - 7}
                 </p>
               </div>
 

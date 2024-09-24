@@ -43,7 +43,6 @@ const request = async (endpoint, method, body) => {
   }
 };
 
-
 const getCities = async () => {
   try {
     const response = await request(
@@ -158,11 +157,23 @@ const calculateShippingCost = async (labelData) => {
     mode: "calculate",
   });
 };
-
+const deleteShippingLabel = async (labelData) => {
+  const requestBody = {
+    label: {
+      shipmentNumbers:[labelData.shipmentNumber],
+    },
+  }
+    return request(
+      "Shipments/LabelService.deleteLabels.json", 
+      "POST",
+      requestBody
+    );
+}
 module.exports = {
   createShippingLabel,
   validateShippingLabel,
   calculateShippingCost,
   getCities,
   getOffices,
+  deleteShippingLabel
 };
