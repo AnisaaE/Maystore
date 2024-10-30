@@ -46,7 +46,6 @@ const ShoppingCart = () => {
     <>
     <div
       className="container my-5 p-4 bg-light rounded"
-      
     >
       <h2 className="text-center mb-4 ">Вашата количка</h2>
       {cartItems.length === 0 ? (
@@ -65,7 +64,6 @@ const ShoppingCart = () => {
                   className="img-thumbnail me-3"
                   style={{ width: "80px", height: "80px", objectFit: "cover" }}
                 />
-
                 <div className="flex-grow-1 d-flex flex-row flex-wrap align-items-center">
                   <h5 className="mb-1 me-3">{item.name}</h5>
                   <p className="mb-1 text-muted me-3">Цена: {item.price} лв.</p>
