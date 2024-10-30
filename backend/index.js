@@ -8,7 +8,7 @@ const routes = require("./routes");
 const authenticateToken = require('./middlewares/authMiddleware');
 const app = express();
 app.use(cors({
-  origin: ['https://maystore.bg', 'http://localhost:5173'],
+  origin: ['https://maystore.bg', 'http://localhost:5173', 'http://localhost:3000'],
   allowedHeaders: ['Content-Type', 'X-Authorization'],
   exposedHeaders: ['X-Authorization'],
 }));

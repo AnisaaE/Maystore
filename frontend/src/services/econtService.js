@@ -1,6 +1,6 @@
 import { requestBuilder } from "./requests";
 
-const baseUrl = "http://localhost:4000/econt";
+const baseUrl = "https://maystore-backend.onrender.com/econt";
 
 export const econtServiceBuilder = () => {
   const request = requestBuilder();
