@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 const uploadImage = async (req, res) => {
   res.json({
     success: 1,
-    image_url: `https://maystore-backend.onrender.com/images/${req.file.filename}`,
+    image_url: req.file.path,  
   });
 };
 
@@ -17,9 +17,7 @@ const addProduct = async (req, res) => {
       return res.status(400).json({ message: "No images uploaded" });
     }
 
-    const imageUrls = req.files.map(
-      (file) => `https://maystore-backend.onrender.com/upload/images/${file.filename}`
-    );
+    const imageUrls = req.files.map((file) => file.path);
 
     let products = await Product.find({});
     let id;

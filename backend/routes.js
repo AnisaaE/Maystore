@@ -3,7 +3,7 @@ const {authenticateToken} = require('./middlewares/authMiddleware');
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
 const orderController = require('./controllers/orderController');
-const upload = require('./config/multerConfig');
+const upload = require('./config/multerCloudinaryConfig');
 
 const isSuperuser = (req, res, next) => {
   console.log('User:', req.user); // Проверка на съдържанието на req.user
