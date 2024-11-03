@@ -76,7 +76,7 @@ const handleColorChange = (index, event) => {
       }
     });
     try {
-      const response = await fetch('http://localhost:4000/add', {
+      const response = await fetch('https://maystore-backend.onrender.com/add', {
         method: 'POST',
         body: formDataToSend,
         // Headers за `multipart/form-data` са автоматично настроени от браузъра при използване на FormData

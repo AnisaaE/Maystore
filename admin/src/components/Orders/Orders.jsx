@@ -9,7 +9,7 @@ const AdminPanel = () => {
     description: "",
   });
 
-  const API_URL = "http://localhost:4000";
+  const API_URL = "https://maystore-backend.onrender.com";
 
   useEffect(() => {
     fetch(`${API_URL}/orders`)

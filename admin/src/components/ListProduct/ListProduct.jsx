@@ -7,7 +7,7 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:4000/products");
+        const response = await fetch("https://maystore-backend.onrender.com/products");
         const data = await response.json();
         console.log(data);
         setItems(data.products);
@@ -21,7 +21,7 @@ const ListProduct = () => {
   }, []);
 
   const handleRemoveItem = async (id) => {
-    const res = await fetch("http://localhost:4000/removeProduct", {
+    const res = await fetch("https://maystore-backend.onrender.com/removeProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

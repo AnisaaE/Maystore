@@ -7,7 +7,7 @@ const AdminUserList = ({ user }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:4000/users', {
+        const response = await fetch('https://maystore-backend.onrender.com/users', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const AdminUserList = ({ user }) => {
   const handleUserRoleChange = async (userId, currentRole) => {
     try {
       const isPromote = currentRole !== 'admin';
-      const response = await fetch(`http://localhost:4000/users/${userId}/${isPromote ? 'promote' : 'revoke'}`, {
+      const response = await fetch(`https://maystore-backend.onrender.com/users/${userId}/${isPromote ? 'promote' : 'revoke'}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

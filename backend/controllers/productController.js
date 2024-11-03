@@ -18,7 +18,7 @@ const addProduct = async (req, res) => {
     }
 
     const imageUrls = req.files.map(
-      (file) => `http://localhost:4000/upload/images/${file.filename}`
+      (file) => `https://maystore-backend.onrender.com/upload/images/${file.filename}`
     );
 
     let products = await Product.find({});
